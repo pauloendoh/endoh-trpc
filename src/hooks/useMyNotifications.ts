@@ -1,19 +1,21 @@
-import { showNotification } from "@mantine/notifications"
+import { useToast } from "@chakra-ui/react"
 
 export const useMyNotifications = () => {
+  const toast = useToast
+
   const setSuccessMessage = (title: string, message = "") => {
-    showNotification({
+    toast({
       title,
-      message,
-      color: "green",
+      description: message,
+      status: "success",
     })
   }
 
   const setErrorMessage = (title: string, message = "") => {
-    showNotification({
+    toast({
       title,
-      message,
-      color: "red",
+      description: message,
+      status: "error",
     })
   }
 

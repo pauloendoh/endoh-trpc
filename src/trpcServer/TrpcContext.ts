@@ -1,7 +1,6 @@
-// @/src/server/context.ts
-import myPrismaClient from "@/utils/myPrismaClient"
 import * as trpc from "@trpc/server"
 import * as trpcNext from "@trpc/server/adapters/next"
+import myPrismaClient from "../utils/myPrismaClient"
 import { getServerAuthSession } from "./common/getServerAuthSession"
 
 export async function createContext(ctx: trpcNext.CreateNextContextOptions) {

@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "@mantine/core"
+import { Box, Button, Flex } from "@chakra-ui/react"
 
 interface Props {
   submitButtonId?: string
@@ -12,7 +12,7 @@ const SaveCancelButtons = (props: Props) => {
   return (
     <Flex>
       <Button
-        loading={props.isLoading}
+        isLoading={props.isLoading}
         type="submit"
         color="primary"
         id={props.submitButtonId}

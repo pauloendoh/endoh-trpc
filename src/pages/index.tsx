@@ -1,16 +1,16 @@
-import HomePage from "@/components/home/HomePage/HomePage";
-import LandingPage from "@/components/home/LandingPage/LandingPage";
-import type { NextPage } from "next";
-import { useSession } from "next-auth/react";
+import type { NextPage } from "next"
+import { useSession } from "next-auth/react"
+import HomePage from "../components/home/HomePage/HomePage"
+import LandingPage from "../components/home/LandingPage/LandingPage"
 
 const IndexPageRoute: NextPage = () => {
-  const { data, status } = useSession();
+  const { data, status } = useSession()
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading") return <div>Loading...</div>
 
-  if (data?.user) return <HomePage />;
+  if (data?.user) return <HomePage />
 
-  return <LandingPage />;
-};
+  return <LandingPage />
+}
 
-export default IndexPageRoute;
+export default IndexPageRoute

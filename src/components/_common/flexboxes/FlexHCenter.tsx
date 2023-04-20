@@ -1,4 +1,4 @@
-import { Box } from "@mantine/core"
+import { Box } from "@chakra-ui/react"
 import React from "react"
 
 type Props = React.ComponentProps<typeof Box> & {

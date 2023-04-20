@@ -1,4 +1,4 @@
-import myPrismaClient from "@/utils/myPrismaClient"
+import myPrismaClient from "../../utils/myPrismaClient"
 import { protectedProcedure } from "../middlewares/protectedProcedure"
 import { router } from "../trpcServer"
 
