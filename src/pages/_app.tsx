@@ -1,10 +1,13 @@
 import { ChakraProvider } from "@chakra-ui/react"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
 import { AppProps } from "next/app"
 import Head from "next/head"
-import { routes } from "../hooks/trpc/myTrpc"
+import GlobalModals from "../components/_common/modals/GlobalModals"
+import { useMyQueryClient } from "../hooks/react-query/useMyQueryClient"
+import { trpc } from "../utils/trpc/trpc"
 import "./global.css"
 
 interface MyAppProps
@@ -15,7 +18,7 @@ interface MyAppProps
 function MyApp(props: MyAppProps) {
   const { Component, pageProps } = props
 
-  const queryClient = new QueryClient()
+  const myQueryClient = useMyQueryClient()
 
   return (
     <>
@@ -29,7 +32,7 @@ function MyApp(props: MyAppProps) {
 
       <ChakraProvider>
         <SessionProvider session={props.pageProps.session}>
-          <QueryClientProvider client={queryClient}>
+          <QueryClientProvider client={myQueryClient}>
             <Head>
               <meta
                 name="viewport"
@@ -38,6 +41,8 @@ function MyApp(props: MyAppProps) {
             </Head>
 
             <Component {...pageProps} />
+            <GlobalModals />
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </SessionProvider>
       </ChakraProvider>
@@ -45,4 +50,4 @@ function MyApp(props: MyAppProps) {
   )
 }
 
-export default routes.withTRPC(MyApp)
+export default trpc.withTRPC(MyApp)
