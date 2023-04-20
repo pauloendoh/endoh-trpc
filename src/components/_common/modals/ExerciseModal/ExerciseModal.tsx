@@ -1,5 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-
 import {
   FormControl,
   FormErrorMessage,
@@ -25,7 +23,6 @@ import useExerciseModalStore from "../../../../hooks/zustand/modals/useExerciseM
 import {
   buildExerciseInput,
   ExerciseInput,
-  exerciseInputSchema,
 } from "../../../../trpcServer/routers/exercise/types/ExerciseInput"
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
 
@@ -41,14 +38,12 @@ const ExerciseModal = (props: Props) => {
     setValue,
     setFocus,
     formState: { errors },
-  } = useForm<ExerciseInput>({
-    resolver: zodResolver(exerciseInputSchema),
-  })
+  } = useForm<ExerciseInput>({})
 
-  const { mutate } = useSaveExerciseMutation()
+  const { mutateAsync } = useSaveExerciseMutation()
 
   const onSubmit = async (data: ExerciseInput) => {
-    mutate(data, {
+    mutateAsync(data, {
       onSuccess: () => {
         closeModal()
       },

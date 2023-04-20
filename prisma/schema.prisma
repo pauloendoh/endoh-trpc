@@ -50,6 +50,8 @@ model User {
   sessions      Session[]
   Creation      Creation[]
   exercises     Exercise[]
+  friends       Friend[]
+  interests     Interest[]
 }
 
 model VerificationToken {
@@ -90,4 +92,43 @@ model Exercise {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Friend {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  name String
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  friendInterests FriendInterest[]
+}
+
+model Interest {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  name              String
+  userInterestLevel Int
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  friendInterests FriendInterest[]
+}
+
+model FriendInterest {
+  friend   Friend @relation(fields: [friendId], references: [id])
+  friendId String
+
+  interest            Interest @relation(fields: [interestId], references: [id])
+  interestId          String
+  friendInterestLevel Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([friendId, interestId])
 }

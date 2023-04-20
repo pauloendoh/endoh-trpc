@@ -4,15 +4,15 @@ import { pushOrReplace } from "endoh-utils"
 import { trpc } from "../../../utils/trpc/trpc"
 import { useMyNotifications } from "../../useMyNotifications"
 
-export const useSaveExerciseMutation = () => {
+export const useSaveInterestMutation = () => {
   const queryClient = useQueryClient()
 
   const { setSuccessMessage } = useMyNotifications()
 
-  return trpc.exercise.saveExercise.useMutation({
+  return trpc.interest.saveInterest.useMutation({
     onSuccess: async (saved, input) => {
       const queryKey = getQueryKey(
-        trpc.exercise.myExercises,
+        trpc.interest.myInterests,
         undefined,
         "query"
       )
@@ -20,8 +20,6 @@ export const useSaveExerciseMutation = () => {
       queryClient.setQueryData<typeof saved[]>(queryKey, (curr) =>
         pushOrReplace(curr, saved, "id")
       )
-
-      setSuccessMessage("Exercise saved")
     },
   })
 }
