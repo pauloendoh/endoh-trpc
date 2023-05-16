@@ -2,6 +2,7 @@ import { Box, Button, Container, Text, useColorMode } from "@chakra-ui/react"
 import { signOut } from "next-auth/react"
 import { useMemo } from "react"
 import useExerciseModalStore from "../../../hooks/zustand/modals/useExerciseModalStore"
+import { buildExerciseInput } from "../../../trpcServer/routers/exercise/types/ExerciseInput"
 import { trpc } from "../../../utils/trpc/trpc"
 import FlexCol from "../../_common/flexboxes/FlexCol"
 import FlexVCenter from "../../_common/flexboxes/FlexVCenter"
@@ -33,7 +34,9 @@ const HomePage = (props: Props) => {
       <Container mt={4}>
         <FlexVCenter justify={"space-between"}>
           <Text>Exercises</Text>
-          <Button onClick={openModal}>+ Add Exercise</Button>
+          <Button onClick={() => openModal(buildExerciseInput())}>
+            + Add Exercise
+          </Button>
         </FlexVCenter>
         <FlexCol gap={4} mt={4}>
           {sortedExercises?.map((exercise) => (

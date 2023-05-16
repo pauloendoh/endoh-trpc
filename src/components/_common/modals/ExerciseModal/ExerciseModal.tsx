@@ -29,7 +29,7 @@ import SaveCancelButtons from "../../buttons/SaveCancelButtons"
 type Props = {}
 
 const ExerciseModal = (props: Props) => {
-  const { isOpen, closeModal } = useExerciseModalStore()
+  const { isOpen, closeModal, initialValue } = useExerciseModalStore()
   const {
     reset,
     watch,
@@ -38,7 +38,9 @@ const ExerciseModal = (props: Props) => {
     setValue,
     setFocus,
     formState: { errors },
-  } = useForm<ExerciseInput>({})
+  } = useForm<ExerciseInput>({
+    defaultValues: initialValue || buildExerciseInput(),
+  })
 
   const { mutateAsync } = useSaveExerciseMutation()
 
@@ -52,7 +54,7 @@ const ExerciseModal = (props: Props) => {
 
   useEffect(() => {
     if (isOpen) {
-      reset(buildExerciseInput())
+      reset(initialValue || buildExerciseInput())
 
       setTimeout(() => {
         setFocus("title")

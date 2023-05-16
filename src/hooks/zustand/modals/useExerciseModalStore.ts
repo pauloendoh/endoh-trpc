@@ -1,15 +1,18 @@
 import { create } from "zustand"
+import { ExerciseInput } from "../../../trpcServer/routers/exercise/types/ExerciseInput"
 
 interface IStore {
   isOpen: boolean
-  openModal: () => void
+  initialValue: ExerciseInput | null
+  openModal: (initialValue: ExerciseInput | null) => void
   closeModal: () => void
 }
 
 const useExerciseModalStore = create<IStore>((set) => ({
   isOpen: false,
-  openModal: () => {
-    set({ isOpen: true })
+  initialValue: null,
+  openModal: (initialValue: ExerciseInput | null) => {
+    set({ isOpen: true, initialValue })
   },
   closeModal: () => {
     set({ isOpen: false })
