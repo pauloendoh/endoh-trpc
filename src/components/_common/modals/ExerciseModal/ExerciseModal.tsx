@@ -25,6 +25,8 @@ import {
   ExerciseInput,
 } from "../../../../trpcServer/routers/exercise/types/ExerciseInput"
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
+import FlexCol from "../../flexboxes/FlexCol"
+import FlexVCenter from "../../flexboxes/FlexVCenter"
 
 type Props = {}
 
@@ -45,6 +47,9 @@ const ExerciseModal = (props: Props) => {
   const { mutateAsync } = useSaveExerciseMutation()
 
   const onSubmit = async (data: ExerciseInput) => {
+    data.pump = Number(data.pump)
+    data.like = Number(data.like)
+
     mutateAsync(data, {
       onSuccess: () => {
         closeModal()
@@ -73,37 +78,60 @@ const ExerciseModal = (props: Props) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <ModalBody>
-            <FormControl>
-              <FormLabel>Title</FormLabel>
-              <Input {...register("title")} />
-            </FormControl>
+            <FlexCol gap={4}>
+              <FormControl>
+                <FormLabel>Title</FormLabel>
+                <Input {...register("title")} />
+              </FormControl>
 
-            <FormControl>
-              <FormLabel>Description</FormLabel>
-              <Input
-                {...register("description")}
-                isInvalid={!!errors.description}
-              />
-            </FormControl>
+              <FormControl>
+                <FormLabel>Description</FormLabel>
+                <Input
+                  {...register("description")}
+                  isInvalid={!!errors.description}
+                />
+              </FormControl>
 
-            <FormControl isInvalid={!!errors.pump}>
-              <FormLabel>Pump</FormLabel>
-              <NumberInput
-                {...register("pump")}
-                onChange={(value) => setValue("pump", Number(value))}
-                min={0}
-                max={5}
-                step={1}
-                isInvalid={!!errors.pump}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <FormErrorMessage>{errors.pump?.message}</FormErrorMessage>
-            </FormControl>
+              <FlexVCenter gap={4}>
+                <FormControl isInvalid={!!errors.pump}>
+                  <FormLabel>Pump</FormLabel>
+                  <NumberInput
+                    {...register("pump")}
+                    onChange={(value) => setValue("pump", Number(value))}
+                    min={0}
+                    max={5}
+                    step={1}
+                    isInvalid={!!errors.pump}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                  <FormErrorMessage>{errors.pump?.message}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl isInvalid={!!errors.like}>
+                  <FormLabel>Interest</FormLabel>
+                  <NumberInput
+                    {...register("like")}
+                    onChange={(value) => setValue("like", Number(value))}
+                    min={0}
+                    max={5}
+                    step={1}
+                    isInvalid={!!errors.like}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                  <FormErrorMessage>{errors.like?.message}</FormErrorMessage>
+                </FormControl>
+              </FlexVCenter>
+            </FlexCol>
           </ModalBody>
 
           <ModalFooter>
