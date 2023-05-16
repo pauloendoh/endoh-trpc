@@ -1,4 +1,4 @@
-import { Box, Button, Container, Text } from "@chakra-ui/react"
+import { Box, Button, Container, Text, useColorMode } from "@chakra-ui/react"
 import { signOut } from "next-auth/react"
 import { useMemo } from "react"
 import useExerciseModalStore from "../../../hooks/zustand/modals/useExerciseModalStore"
@@ -17,12 +17,16 @@ const HomePage = (props: Props) => {
       return a.createdAt > b.createdAt ? -1 : 1
     })
   }, [exercises])
+  const { colorMode, toggleColorMode } = useColorMode()
 
   return (
     <Box>
       <FlexVCenter>{user?.name}</FlexVCenter>
       <Box>
         <Button onClick={() => signOut()}>Logout</Button>
+        <Button onClick={toggleColorMode}>
+          {colorMode === "light" ? "Light" : "Dark"}
+        </Button>
       </Box>
 
       <Container mt={4}>

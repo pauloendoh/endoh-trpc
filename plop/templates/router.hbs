@@ -1,0 +1,19 @@
+import { protectedProcedure } from "../../middlewares/protectedProcedure"
+import { router } from "../../trpcServer"
+import { {{pascalCase name}}Service } from "./{{pascalCase name}}Service"
+import { {{camelCase name}}InputSchema } from "./types/{{pascalCase name}}Input"
+
+const service = new {{pascalCase name}}Service()
+
+export const {{pascalCase name}}Router = router({
+  my{{pascalCase name}}s: protectedProcedure.query(async ({ ctx }) => {
+    const {{camelCase name}}s = await service.find{{pascalCase name}}s(ctx.session.user.id)
+    return {{camelCase name}}s
+  }),
+  save{{pascalCase name}}: protectedProcedure
+    .input({{camelCase name}}InputSchema)
+    .mutation(async ({ ctx, input }) => {
+      const {{camelCase name}} = await service.save{{pascalCase name}}(ctx.session.user.id, input)
+      return {{camelCase name}}
+    }),
+})

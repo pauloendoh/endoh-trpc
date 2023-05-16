@@ -7,6 +7,7 @@ import { AppProps } from "next/app"
 import Head from "next/head"
 import GlobalModals from "../components/_common/modals/GlobalModals"
 import { useMyQueryClient } from "../hooks/react-query/useMyQueryClient"
+import myTheme from "../utils/myTheme"
 import { trpc } from "../utils/trpc/trpc"
 import "./global.css"
 
@@ -30,7 +31,7 @@ function MyApp(props: MyAppProps) {
         />
       </Head>
 
-      <ChakraProvider>
+      <ChakraProvider theme={myTheme}>
         <SessionProvider session={props.pageProps.session}>
           <QueryClientProvider client={myQueryClient}>
             <Head>

@@ -1,0 +1,18 @@
+import { {{pascalCase name}} } from "@prisma/client"
+import { z } from "zod"
+
+let prismaModel: {{pascalCase name}}
+
+export const {{camelCase name}}InputSchema = z.object({
+  
+})
+
+export type {{pascalCase name}}Input = z.infer<typeof {{camelCase name}}InputSchema>
+
+export const build{{pascalCase name}}Input = (
+  p?: Partial<{{pascalCase name}}Input>
+): {{pascalCase name}}Input => ({
+  name: "",
+  user{{pascalCase name}}Level: 0,
+  ...p,
+})
