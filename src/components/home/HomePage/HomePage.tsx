@@ -5,6 +5,7 @@ import useExerciseModalStore from "../../../hooks/zustand/modals/useExerciseModa
 import { trpc } from "../../../utils/trpc/trpc"
 import FlexCol from "../../_common/flexboxes/FlexCol"
 import FlexVCenter from "../../_common/flexboxes/FlexVCenter"
+import ExerciseCard from "./ExerciseCard/ExerciseCard"
 type Props = {}
 
 const HomePage = (props: Props) => {
@@ -34,9 +35,9 @@ const HomePage = (props: Props) => {
           <Text>Exercises</Text>
           <Button onClick={openModal}>+ Add Exercise</Button>
         </FlexVCenter>
-        <FlexCol gap={4}>
+        <FlexCol gap={4} mt={4}>
           {sortedExercises?.map((exercise) => (
-            <Text key={exercise.id}>{exercise.title}</Text>
+            <ExerciseCard key={exercise.id} exercise={exercise} />
           ))}
         </FlexCol>
       </Container>
