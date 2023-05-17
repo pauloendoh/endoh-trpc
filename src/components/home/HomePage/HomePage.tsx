@@ -16,7 +16,10 @@ const HomePage = (props: Props) => {
 
   const sortedExercises = useMemo(() => {
     return exercises?.sort((a, b) => {
-      return a.createdAt > b.createdAt ? -1 : 1
+      const avgA = (a.like + (a.pump || a.like)) / 2
+      const avgB = (b.like + (b.pump || b.like)) / 2
+
+      return avgB - avgA
     })
   }, [exercises])
   const { colorMode, toggleColorMode } = useColorMode()

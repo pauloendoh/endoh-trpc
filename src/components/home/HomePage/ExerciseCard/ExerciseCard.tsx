@@ -16,7 +16,25 @@ const ExerciseCard = (props: Props) => {
           <b>{props.exercise.title}</b>
           <ExerciseCardMoreMenu exercise={props.exercise} />
         </FlexVCenter>
-        <FlexVCenter>
+
+        {!!props.exercise.tags.length && (
+          <Flex>
+            {props.exercise.tags.map((tag) => (
+              <Text
+                key={tag.id}
+                mr={2}
+                color="gray.400"
+                bg="gray.600"
+                borderRadius={4}
+                p={1}
+              >
+                #{tag.name}
+              </Text>
+            ))}
+          </Flex>
+        )}
+
+        <FlexVCenter mt={2}>
           <Text w={100}>Pump: {props.exercise.pump}</Text>
           <Text>Int: {props.exercise.like}</Text>
         </FlexVCenter>
