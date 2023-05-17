@@ -15,8 +15,10 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Textarea,
 } from "@chakra-ui/react"
 import { useEffect } from "react"
+import { Col, Row } from "react-grid-system"
 import { useForm } from "react-hook-form"
 import { useSaveExerciseMutation } from "../../../../hooks/trpc/exercise/useSaveExerciseMutation"
 import useExerciseModalStore from "../../../../hooks/zustand/modals/useExerciseModalStore"
@@ -26,7 +28,7 @@ import {
 } from "../../../../trpcServer/routers/exercise/types/ExerciseInput"
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
 import FlexCol from "../../flexboxes/FlexCol"
-import FlexVCenter from "../../flexboxes/FlexVCenter"
+import ExerciseTagSelector from "./ExerciseTagSelector/ExerciseTagSelector"
 
 type Props = {}
 
@@ -84,53 +86,63 @@ const ExerciseModal = (props: Props) => {
                 <Input {...register("title")} />
               </FormControl>
 
+              <ExerciseTagSelector
+                selectedTagIds={watch("tagIds") || []}
+                onChange={(selectedTagIds) =>
+                  setValue("tagIds", selectedTagIds)
+                }
+              />
+              <Row>
+                <Col xs={6}>
+                  <FormControl isInvalid={!!errors.pump}>
+                    <FormLabel>Pump</FormLabel>
+                    <NumberInput
+                      {...register("pump")}
+                      onChange={(value) => setValue("pump", Number(value))}
+                      min={0}
+                      max={5}
+                      step={1}
+                      isInvalid={!!errors.pump}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                    <FormErrorMessage>{errors.pump?.message}</FormErrorMessage>
+                  </FormControl>
+                </Col>
+                <Col xs={6}>
+                  <FormControl isInvalid={!!errors.like}>
+                    <FormLabel>Interest</FormLabel>
+                    <NumberInput
+                      {...register("like")}
+                      onChange={(value) => setValue("like", Number(value))}
+                      min={0}
+                      max={5}
+                      step={1}
+                      isInvalid={!!errors.like}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                    <FormErrorMessage>{errors.like?.message}</FormErrorMessage>
+                  </FormControl>
+                </Col>
+              </Row>
+
               <FormControl>
                 <FormLabel>Description</FormLabel>
-                <Input
+                <Textarea
                   {...register("description")}
                   isInvalid={!!errors.description}
+                  resize="vertical"
                 />
               </FormControl>
-
-              <FlexVCenter gap={4}>
-                <FormControl isInvalid={!!errors.pump}>
-                  <FormLabel>Pump</FormLabel>
-                  <NumberInput
-                    {...register("pump")}
-                    onChange={(value) => setValue("pump", Number(value))}
-                    min={0}
-                    max={5}
-                    step={1}
-                    isInvalid={!!errors.pump}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                  <FormErrorMessage>{errors.pump?.message}</FormErrorMessage>
-                </FormControl>
-
-                <FormControl isInvalid={!!errors.like}>
-                  <FormLabel>Interest</FormLabel>
-                  <NumberInput
-                    {...register("like")}
-                    onChange={(value) => setValue("like", Number(value))}
-                    min={0}
-                    max={5}
-                    step={1}
-                    isInvalid={!!errors.like}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                  <FormErrorMessage>{errors.like?.message}</FormErrorMessage>
-                </FormControl>
-              </FlexVCenter>
             </FlexCol>
           </ModalBody>
 

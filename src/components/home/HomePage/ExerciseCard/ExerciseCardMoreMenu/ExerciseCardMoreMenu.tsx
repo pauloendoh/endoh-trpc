@@ -1,12 +1,11 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
-import { Exercise } from "@prisma/client"
-import { SerializeObject } from "@trpc/server/shared"
 import { MdArrowDropDown, MdMoreHoriz } from "react-icons/md"
+import { ExerciseOutput } from "../../../../../hooks/trpc/exercise/types/ExerciseOutput"
 import useExerciseModalStore from "../../../../../hooks/zustand/modals/useExerciseModalStore"
 import { buildExerciseInput } from "../../../../../trpcServer/routers/exercise/types/ExerciseInput"
 
 type Props = {
-  exercise: SerializeObject<Exercise>
+  exercise: ExerciseOutput
 }
 
 const ExerciseCardMoreMenu = (props: Props) => {
@@ -30,6 +29,7 @@ const ExerciseCardMoreMenu = (props: Props) => {
                   buildExerciseInput({
                     ...props.exercise,
                     imageUrl: props.exercise.imageUrl ?? undefined,
+                    tagIds: props.exercise.tags.map((tag) => tag.id),
                   })
                 )
               }

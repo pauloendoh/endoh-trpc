@@ -1,12 +1,11 @@
 import { Flex, Text } from "@chakra-ui/react"
-import { Exercise } from "@prisma/client"
-import { SerializeObject } from "@trpc/server/shared"
+import { ExerciseOutput } from "../../../../hooks/trpc/exercise/types/ExerciseOutput"
 import FlexCol from "../../../_common/flexboxes/FlexCol"
 import FlexVCenter from "../../../_common/flexboxes/FlexVCenter"
 import ExerciseCardMoreMenu from "./ExerciseCardMoreMenu/ExerciseCardMoreMenu"
 
 type Props = {
-  exercise: SerializeObject<Exercise>
+  exercise: ExerciseOutput
 }
 
 const ExerciseCard = (props: Props) => {

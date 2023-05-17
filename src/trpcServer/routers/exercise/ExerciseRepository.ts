@@ -1,5 +1,6 @@
 import myPrismaClient from "../../../utils/myPrismaClient"
 import { ExerciseInput } from "./types/ExerciseInput"
+import { TagInput } from "./types/TagInput"
 
 export class ExerciseRepository {
   constructor(private readonly prisma = myPrismaClient) {}
@@ -9,14 +10,28 @@ export class ExerciseRepository {
       where: {
         userId: requesterId,
       },
+      include: {
+        tags: true,
+      },
     })
   }
 
   createExercise(requesterId: string, exercise: ExerciseInput) {
+    const { tagIds, ...rest } = exercise
     return this.prisma.exercise.create({
       data: {
-        userId: requesterId,
-        ...exercise,
+        user: {
+          connect: {
+            id: requesterId,
+          },
+        },
+        ...rest,
+        tags: {
+          connect: tagIds.map((id) => ({ id })),
+        },
+      },
+      include: {
+        tags: true,
       },
     })
   }
@@ -31,12 +46,57 @@ export class ExerciseRepository {
   }
 
   updateExercise(exercise: ExerciseInput) {
+    const { tagIds, ...rest } = exercise
     return this.prisma.exercise.update({
       where: {
         id: exercise.id,
       },
       data: {
-        ...exercise,
+        ...rest,
+
+        tags: {
+          set: tagIds.map((id) => ({ id })),
+        },
+      },
+      include: {
+        tags: true,
+      },
+    })
+  }
+
+  createTag(requesterId: string, dto: TagInput) {
+    return this.prisma.exerciseTag.create({
+      data: {
+        userId: requesterId,
+        name: dto.name,
+      },
+    })
+  }
+
+  ownsTag(requesterId: string, tagId: string) {
+    return this.prisma.exerciseTag.findFirst({
+      where: {
+        id: tagId,
+        userId: requesterId,
+      },
+    })
+  }
+
+  updateTag(dto: TagInput) {
+    return this.prisma.exerciseTag.update({
+      where: {
+        id: dto.id,
+      },
+      data: {
+        name: dto.name,
+      },
+    })
+  }
+
+  findTags(requesterId: string) {
+    return this.prisma.exerciseTag.findMany({
+      where: {
+        userId: requesterId,
       },
     })
   }

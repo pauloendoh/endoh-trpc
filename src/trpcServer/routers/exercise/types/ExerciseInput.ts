@@ -13,6 +13,7 @@ export const exerciseInputSchema = z.object({
     .min(0, "Like must be between 0 and 5")
     .max(5, "Like must be between 0 and 5"),
   imageUrl: z.string().optional(),
+  tagIds: z.array(z.string()),
 })
 
 export type ExerciseInput = z.infer<typeof exerciseInputSchema>
@@ -25,5 +26,6 @@ export const buildExerciseInput = (
   pump: 0,
   like: 0,
   imageUrl: "",
+  tagIds: [],
   ...p,
 })

@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server"
 import { ExerciseRepository } from "./ExerciseRepository"
 import { ExerciseInput } from "./types/ExerciseInput"
+import { TagInput } from "./types/TagInput"
 
 export class ExerciseService {
   constructor(private readonly exerciseRepository = new ExerciseRepository()) {}
@@ -32,5 +33,24 @@ export class ExerciseService {
       })
     }
     return this.exerciseRepository.updateExercise(exercise)
+  }
+
+  async saveTag(requesterId: string, dto: TagInput) {
+    if (dto.id) {
+      const ownsTag = await this.exerciseRepository.ownsTag(requesterId, dto.id)
+      if (!ownsTag) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You are not the owner of this tag",
+        })
+      }
+
+      return this.exerciseRepository.updateTag(dto)
+    }
+    return this.exerciseRepository.createTag(requesterId, dto)
+  }
+
+  async findTags(requesterId: string) {
+    return this.exerciseRepository.findTags(requesterId)
   }
 }

@@ -12,18 +12,16 @@ import {
 } from "@chakra-ui/react"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { useSaveFriendMutation } from "../../../../hooks/trpc/friend/useSaveFriendMutation"
-import useFriendModalStore from "../../../../hooks/zustand/modals/useFriendModalStore"
-import {
-  buildFriendInput,
-  FriendInput,
-} from "../../../../trpcServer/routers/friend/types/FriendInput"
+import { useSaveTagMutation } from "../../../../hooks/trpc/exercise/tag/useSaveTagMutation"
+import useExerciseTagModalStore from "../../../../hooks/zustand/modals/useExerciseTagModalStore"
+import { TagInput } from "../../../../trpcServer/routers/exercise/types/TagInput"
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
+import FlexCol from "../../flexboxes/FlexCol"
 
 type Props = {}
 
-const FriendModal = (props: Props) => {
-  const { isOpen, closeModal } = useFriendModalStore()
+const ExerciseTagModal = (props: Props) => {
+  const { isOpen, closeModal, initialValue } = useExerciseTagModalStore()
   const {
     reset,
     watch,
@@ -32,11 +30,13 @@ const FriendModal = (props: Props) => {
     setValue,
     setFocus,
     formState: { errors },
-  } = useForm<FriendInput>({})
+  } = useForm<TagInput>({
+    defaultValues: initialValue,
+  })
 
-  const { mutateAsync } = useSaveFriendMutation()
+  const { mutateAsync } = useSaveTagMutation()
 
-  const onSubmit = async (data: FriendInput) => {
+  const onSubmit = async (data: TagInput) => {
     mutateAsync(data, {
       onSuccess: () => {
         closeModal()
@@ -46,7 +46,7 @@ const FriendModal = (props: Props) => {
 
   useEffect(() => {
     if (isOpen) {
-      reset(buildFriendInput())
+      reset(initialValue)
 
       setTimeout(() => {
         setFocus("name")
@@ -55,20 +55,20 @@ const FriendModal = (props: Props) => {
   }, [isOpen])
 
   return (
-    <Modal isOpen={isOpen} onClose={closeModal}>
+    <Modal isOpen={isOpen} onClose={closeModal} size="xs">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>
-          {watch("id") ? "Edit Friend" : "Create Friend"}
-        </ModalHeader>
+        <ModalHeader>{watch("id") ? "Edit Tag" : "Create Tag"}</ModalHeader>
         <ModalCloseButton />
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <ModalBody>
-            <FormControl>
-              <FormLabel>Name</FormLabel>
-              <Input {...register("name")} />
-            </FormControl>
+            <FlexCol gap={4}>
+              <FormControl>
+                <FormLabel>Title</FormLabel>
+                <Input {...register("name")} autoComplete="off" />
+              </FormControl>
+            </FlexCol>
           </ModalBody>
 
           <ModalFooter>
@@ -80,4 +80,4 @@ const FriendModal = (props: Props) => {
   )
 }
 
-export default FriendModal
+export default ExerciseTagModal

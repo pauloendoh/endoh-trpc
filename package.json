@@ -33,6 +33,7 @@
     "@trpc/react-query": "^10.20.0",
     "@trpc/server": "^10.20.0",
     "axios": "^0.26.0",
+    "chakra-react-select": "^4.6.0",
     "dayjs": "^1.11.7",
     "endoh-utils": "^1.0.17",
     "framer-motion": "^10.12.4",
