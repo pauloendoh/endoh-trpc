@@ -8,6 +8,8 @@ import { buildTagInput } from "../../../../../trpcServer/routers/exercise/types/
 type Props = {
   selectedTagIds: string[]
   onChange: (selectedTagIds: string[]) => void
+  hideLabel?: boolean
+  maxWidth?: number
 }
 
 const ExerciseTagSelector = (props: Props) => {
@@ -50,8 +52,9 @@ const ExerciseTagSelector = (props: Props) => {
   }, [tags])
 
   return (
-    <FormControl>
-      <FormLabel>Tag</FormLabel>
+    <FormControl maxW={props.maxWidth || undefined}>
+      {props.hideLabel ? null : <FormLabel>Tag</FormLabel>}
+
       <Select
         value={
           props.selectedTagIds.map((id) => ({
