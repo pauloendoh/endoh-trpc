@@ -44,6 +44,7 @@ const ExerciseCard = (props: Props) => {
             mt={4}
             sx={{
               fontStyle: "italic",
+              whiteSpace: "pre-wrap",
             }}
           >
             {props.exercise.description}
