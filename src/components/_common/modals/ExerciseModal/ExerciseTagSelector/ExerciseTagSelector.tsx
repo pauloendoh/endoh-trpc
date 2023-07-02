@@ -8,7 +8,7 @@ type Props = {
   selectedTagIds: string[]
   onChange: (selectedTagIds: string[]) => void
   hideLabel?: boolean
-  maxWidth?: number
+  width?: number
 }
 
 const ExerciseTagSelector = (props: Props) => {
@@ -56,7 +56,7 @@ const ExerciseTagSelector = (props: Props) => {
         }}
         data={options}
         multiple
-        w={props.maxWidth || 400}
+        w={props.width || "100%"}
         ref={inputRef}
       />
     </>

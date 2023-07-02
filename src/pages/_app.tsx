@@ -3,6 +3,7 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core"
+import { useViewportSize } from "@mantine/hooks"
 import { Notifications } from "@mantine/notifications"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
@@ -10,9 +11,10 @@ import { Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
 import { AppProps } from "next/app"
 import Head from "next/head"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import GlobalModals from "../components/_common/modals/GlobalModals"
 import { useMyQueryClient } from "../hooks/react-query/useMyQueryClient"
+import useScreenSizeStore from "../hooks/zustand/useScreenSizeStore"
 import { myTheme } from "../utils/mantine/myTheme"
 import { trpc } from "../utils/trpc/trpc"
 import "./global.css"
@@ -27,7 +29,18 @@ function MyApp(props: MyAppProps) {
 
   const myQueryClient = useMyQueryClient()
 
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light")
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark")
+
+  const { height, width } = useViewportSize()
+  const [setScreenHeight, setScreenWidth] = useScreenSizeStore((s) => [
+    s.setScreenHeight,
+    s.setScreenWidth,
+  ])
+  useEffect(() => {
+    setScreenHeight(height)
+    setScreenWidth(width)
+  }, [height, width])
+
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"))
 

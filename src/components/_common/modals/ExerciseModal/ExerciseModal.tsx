@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { Col, Row } from "react-grid-system"
 import { useForm } from "react-hook-form"
 import { useSaveExerciseMutation } from "../../../../hooks/trpc/exercise/useSaveExerciseMutation"
+import { useMyMediaQuery } from "../../../../hooks/useMyMediaQuery"
 import useExerciseModalStore from "../../../../hooks/zustand/modals/useExerciseModalStore"
 import {
   buildExerciseInput,
@@ -37,20 +38,24 @@ const ExerciseModal = (props: Props) => {
 
     mutateAsync(data, {
       onSuccess: () => {
-        closeModal()
+        reset(data)
       },
     })
   }
+
+  const { isMobile } = useMyMediaQuery()
 
   useEffect(() => {
     if (isOpen) {
       reset(initialValue || buildExerciseInput())
 
-      setTimeout(() => {
-        setFocus("title")
-      }, 200)
+      if (!isMobile) {
+        setTimeout(() => {
+          setFocus("title")
+        }, 200)
+      }
     }
-  }, [isOpen])
+  }, [isOpen, isMobile])
 
   return (
     <Modal
@@ -96,7 +101,10 @@ const ExerciseModal = (props: Props) => {
             minRows={3}
           />
 
-          <SaveCancelButtons onCancel={closeModal} />
+          <SaveCancelButtons
+            onCancel={closeModal}
+            onEnabledAndCtrlEnter={() => onSubmit(watch())}
+          />
         </FlexCol>
       </form>
     </Modal>

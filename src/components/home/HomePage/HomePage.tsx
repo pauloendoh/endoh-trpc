@@ -48,13 +48,13 @@ const HomePage = (props: Props) => {
         </Button>
       </Box>
 
-      <Container mt={16} size="xs">
+      <Container mt={16} size="xs" mb={120}>
         <FlexVCenter justify={"space-between"}>
           <ExerciseTagSelector
             selectedTagIds={selectedTagIds}
             onChange={setSelectedTagIds}
             hideLabel
-            maxWidth={300}
+            width={300}
           />
           <Button onClick={() => openModal(buildExerciseInput())}>
             + Add Exercise
