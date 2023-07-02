@@ -1,4 +1,5 @@
-import { Box, Button, Container, useColorMode } from "@chakra-ui/react"
+import { Box, Button, Container, useMantineColorScheme } from "@mantine/core"
+
 import { signOut } from "next-auth/react"
 import { useMemo, useState } from "react"
 import useExerciseModalStore from "../../../hooks/zustand/modals/useExerciseModalStore"
@@ -31,19 +32,23 @@ const HomePage = (props: Props) => {
       })
   }, [exercises, selectedTagIds])
 
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
 
   return (
     <Box>
       <FlexVCenter>{user?.name}</FlexVCenter>
       <Box>
         <Button onClick={() => signOut()}>Logout</Button>
-        <Button onClick={toggleColorMode}>
-          {colorMode === "light" ? "Light" : "Dark"}
+        <Button
+          onClick={() =>
+            toggleColorScheme(colorScheme === "light" ? "dark" : "light")
+          }
+        >
+          {colorScheme === "light" ? "Dark" : "Light"}
         </Button>
       </Box>
 
-      <Container mt={4}>
+      <Container mt={16} size="xs">
         <FlexVCenter justify={"space-between"}>
           <ExerciseTagSelector
             selectedTagIds={selectedTagIds}
@@ -55,7 +60,7 @@ const HomePage = (props: Props) => {
             + Add Exercise
           </Button>
         </FlexVCenter>
-        <FlexCol gap={4} mt={4}>
+        <FlexCol gap={16} mt={16}>
           {sortedExercises?.map((exercise) => (
             <ExerciseCard key={exercise.id} exercise={exercise} />
           ))}

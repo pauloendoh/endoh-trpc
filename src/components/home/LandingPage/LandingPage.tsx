@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "@chakra-ui/react"
+import { Box, Button, Flex } from "@mantine/core"
 import { signIn } from "next-auth/react"
 
 const LandingPage = () => {

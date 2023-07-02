@@ -1,21 +1,11 @@
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from "@chakra-ui/react"
+import { Modal, TextInput } from "@mantine/core"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useSaveInterestMutation } from "../../../../hooks/trpc/interest/useSaveInterestMutation"
 import useInterestModalStore from "../../../../hooks/zustand/modals/useInterestModalStore"
 import { InterestInput } from "../../../../trpcServer/routers/interest/types/InterestInput"
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
+import FlexCol from "../../flexboxes/FlexCol"
 import MyNumberInput from "../../inputs/MyNumberInput"
 
 type Props = {}
@@ -55,46 +45,34 @@ const InterestModal = (props: Props) => {
   }, [isOpen])
 
   return (
-    <Modal isOpen={isOpen} onClose={closeModal}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          {watch("id") ? "Edit Interest" : "Create Interest"}
-        </ModalHeader>
-        <ModalCloseButton />
+    <Modal
+      opened={isOpen}
+      onClose={closeModal}
+      title={watch("id") ? "Edit Interest" : "Create Interest"}
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FlexCol gap={4}>
+          <TextInput label="Name" {...register("name")} autoComplete="off" />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ModalBody display="flex" flexDir={"column"} gap={4}>
-            <FormControl>
-              <FormLabel>Name</FormLabel>
-              <Input {...register("name")} autoComplete="off" />
-            </FormControl>
+          <MyNumberInput
+            w={"96px"}
+            min={0}
+            max={3}
+            value={watch("userInterestLevel")}
+            onChange={(value) => {
+              const num = Number(value)
+              if (num >= 0 && num <= 3) {
+                setValue("userInterestLevel", Number(value))
+              }
+            }}
+          />
+        </FlexCol>
 
-            <FormControl>
-              <FormLabel>My interest</FormLabel>
-              <MyNumberInput
-                w={"96px"}
-                min={0}
-                max={3}
-                value={watch("userInterestLevel")}
-                onChange={(value) => {
-                  const num = Number(value)
-                  if (num >= 0 && num <= 3) {
-                    setValue("userInterestLevel", Number(value))
-                  }
-                }}
-              />
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <SaveCancelButtons
-              onSave={handleSubmit(onSubmit)}
-              onCancel={closeModal}
-            />
-          </ModalFooter>
-        </form>
-      </ModalContent>
+        <SaveCancelButtons
+          onSave={handleSubmit(onSubmit)}
+          onCancel={closeModal}
+        />
+      </form>
     </Modal>
   )
 }

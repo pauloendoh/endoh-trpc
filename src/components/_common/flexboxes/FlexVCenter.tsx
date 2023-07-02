@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react"
+import { Flex } from "@mantine/core"
 import React from "react"
 
 type Props = React.ComponentProps<typeof Flex> & {

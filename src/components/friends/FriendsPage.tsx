@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@chakra-ui/react"
+import { Box, Button, Text } from "@mantine/core"
 import { Col, Row } from "react-grid-system"
 import { useFriendsQuery } from "../../hooks/trpc/friend/useFriendsQuery"
 import useFriendModalStore from "../../hooks/zustand/modals/useFriendModalStore"

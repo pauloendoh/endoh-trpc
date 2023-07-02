@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react"
+import { Button, Text } from "@mantine/core"
 import { useInterestsQuery } from "../../../hooks/trpc/interest/useInterestsQuery"
 import useInterestModalStore from "../../../hooks/zustand/modals/useInterestModalStore"
 import { buildInterestInput } from "../../../trpcServer/routers/interest/types/InterestInput"

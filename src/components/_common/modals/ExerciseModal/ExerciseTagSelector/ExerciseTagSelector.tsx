@@ -1,6 +1,5 @@
-import { FormControl, FormLabel } from "@chakra-ui/react"
-import { MultiValue, Select } from "chakra-react-select"
-import { useMemo } from "react"
+import { MultiSelect } from "@mantine/core"
+import { useMemo, useRef } from "react"
 import { useTagsQuery } from "../../../../../hooks/trpc/exercise/tag/useTagsQuery"
 import useExerciseTagModalStore from "../../../../../hooks/zustand/modals/useExerciseTagModalStore"
 import { buildTagInput } from "../../../../../trpcServer/routers/exercise/types/TagInput"
@@ -17,21 +16,13 @@ const ExerciseTagSelector = (props: Props) => {
 
   const { data: tags } = useTagsQuery()
 
-  const handleChange = (
-    selected: MultiValue<{
-      label: string
-      value: string
-    }>
-  ) => {
-    console.log(selected)
-
-    const selectedValues = selected?.map((s) => s.value)
-    if (selectedValues?.includes("addNewTag")) {
+  const handleChange = (values: string[]) => {
+    if (values?.includes("addNewTag")) {
       openModal(buildTagInput())
       return
     }
 
-    props.onChange(selectedValues || [])
+    props.onChange(values || [])
   }
 
   const options = useMemo(() => {
@@ -51,23 +42,24 @@ const ExerciseTagSelector = (props: Props) => {
     ]
   }, [tags])
 
-  return (
-    <FormControl maxW={props.maxWidth || undefined}>
-      {props.hideLabel ? null : <FormLabel>Tag</FormLabel>}
+  const inputRef = useRef<HTMLInputElement>(null)
 
-      <Select
-        value={
-          props.selectedTagIds.map((id) => ({
-            label: tags?.find((t) => t.id === id)?.name || "",
-            value: id,
-          })) as any
-        }
+  return (
+    <>
+      <MultiSelect
+        label={props.hideLabel ? undefined : "Tags"}
+        value={props.selectedTagIds}
         placeholder="Select tags"
-        onChange={handleChange}
-        options={options}
-        isMulti
+        onChange={(values) => {
+          handleChange(values)
+          inputRef.current?.blur()
+        }}
+        data={options}
+        multiple
+        w={props.maxWidth || 400}
+        ref={inputRef}
       />
-    </FormControl>
+    </>
   )
 }
 

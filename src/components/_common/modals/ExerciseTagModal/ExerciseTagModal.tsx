@@ -1,15 +1,4 @@
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from "@chakra-ui/react"
+import { Modal, TextInput } from "@mantine/core"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useSaveTagMutation } from "../../../../hooks/trpc/exercise/tag/useSaveTagMutation"
@@ -27,7 +16,6 @@ const ExerciseTagModal = (props: Props) => {
     watch,
     handleSubmit,
     register,
-    setValue,
     setFocus,
     formState: { errors },
   } = useForm<TagInput>({
@@ -55,27 +43,23 @@ const ExerciseTagModal = (props: Props) => {
   }, [isOpen])
 
   return (
-    <Modal isOpen={isOpen} onClose={closeModal} size="xs">
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{watch("id") ? "Edit Tag" : "Create Tag"}</ModalHeader>
-        <ModalCloseButton />
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ModalBody>
-            <FlexCol gap={4}>
-              <FormControl>
-                <FormLabel>Title</FormLabel>
-                <Input {...register("name")} autoComplete="off" />
-              </FormControl>
-            </FlexCol>
-          </ModalBody>
-
-          <ModalFooter>
-            <SaveCancelButtons onCancel={closeModal} />
-          </ModalFooter>
-        </form>
-      </ModalContent>
+    <Modal
+      opened={isOpen}
+      onClose={closeModal}
+      size="xs"
+      title={watch("id") ? "Edit Tag" : "Create Tag"}
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FlexCol gap={16}>
+          <TextInput label="Title" {...register("name")} autoComplete="off" />
+          <SaveCancelButtons
+            onCancel={closeModal}
+            onEnabledAndCtrlEnter={() => {
+              onSubmit(watch())
+            }}
+          />
+        </FlexCol>
+      </form>
     </Modal>
   )
 }

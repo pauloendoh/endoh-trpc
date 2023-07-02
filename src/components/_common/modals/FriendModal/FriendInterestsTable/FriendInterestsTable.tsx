@@ -1,12 +1,4 @@
-import {
-  Table,
-  TableContainer,
-  Tbody,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react"
+import { Table } from "@mantine/core"
 import { useMemo } from "react"
 import { useFriendInterestsQuery } from "../../../../../hooks/trpc/friend-interest/useFriendInterestsQuery"
 import { useInterestsQuery } from "../../../../../hooks/trpc/interest/useInterestsQuery"
@@ -44,43 +36,49 @@ const FriendInterestsTable = (props: Props) => {
   }, [friendInterests])
 
   return (
-    <TableContainer>
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>Interest</Th>
-            <Th width="96px" isNumeric>
-              You
-            </Th>
-            <Th width="96px" isNumeric>
-              Them
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {sortedInterests?.map((interest) => (
-            <FriendInterestRow
-              key={interest.id}
-              interest={interest}
-              friendId={props.friendId}
-            />
-          ))}
-        </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th>
-              {" "}
-              {groupedFriendInterests && (
-                <FlexVCenter>
-                  {groupedFriendInterests.count} interests, average level{" "}
-                  {groupedFriendInterests.avg.toFixed(2)}
-                </FlexVCenter>
-              )}
-            </Th>
-          </Tr>
-        </Tfoot>
-      </Table>
-    </TableContainer>
+    <Table variant="simple">
+      <thead>
+        <tr>
+          <th>Interest</th>
+          <th
+            style={{
+              width: 96,
+            }}
+          >
+            You
+          </th>
+          <th
+            style={{
+              width: 96,
+            }}
+          >
+            Them
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {sortedInterests?.map((interest) => (
+          <FriendInterestRow
+            key={interest.id}
+            interest={interest}
+            friendId={props.friendId}
+          />
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>
+            {" "}
+            {groupedFriendInterests && (
+              <FlexVCenter>
+                {groupedFriendInterests.count} interests, average level{" "}
+                {groupedFriendInterests.avg.toFixed(2)}
+              </FlexVCenter>
+            )}
+          </th>
+        </tr>
+      </tfoot>
+    </Table>
   )
 }
 

@@ -16,7 +16,6 @@
     "gen": "plop"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.5.5",
     "@date-io/luxon": "^2.13.1",
     "@emotion/cache": "^11.10.7",
     "@emotion/react": "^11.10.6",
@@ -33,10 +32,13 @@
     "@trpc/react-query": "^10.20.0",
     "@trpc/server": "^10.20.0",
     "axios": "^0.26.0",
-    "chakra-react-select": "^4.6.0",
     "dayjs": "^1.11.7",
+    "@mantine/carousel": "^6.0.9",
+    "@mantine/core": "^6.0.9",
+    "@mantine/hooks": "^6.0.9",
+    "@mantine/next": "^6.0.9",
+    "@mantine/notifications": "^6.0.9",
     "endoh-utils": "^1.0.17",
-    "framer-motion": "^10.12.4",
     "immer": "^9.0.12",
     "luxon": "^2.3.0",
     "next": "^12.3.2",

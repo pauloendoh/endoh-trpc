@@ -2,12 +2,9 @@ import { useQueryClient } from "@tanstack/react-query"
 import { getQueryKey } from "@trpc/react-query"
 import { pushOrReplace } from "endoh-utils"
 import { trpc } from "../../../utils/trpc/trpc"
-import { useMyNotifications } from "../../useMyNotifications"
 
 export const useSaveInterestMutation = () => {
   const queryClient = useQueryClient()
-
-  const { setSuccessMessage } = useMyNotifications()
 
   return trpc.interest.saveInterest.useMutation({
     onSuccess: async (saved, input) => {
@@ -17,7 +14,7 @@ export const useSaveInterestMutation = () => {
         "query"
       )
 
-      queryClient.setQueryData<typeof saved[]>(queryKey, (curr) =>
+      queryClient.setQueryData<(typeof saved)[]>(queryKey, (curr) =>
         pushOrReplace(curr, saved, "id")
       )
     },

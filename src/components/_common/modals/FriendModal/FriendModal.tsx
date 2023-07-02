@@ -1,15 +1,4 @@
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from "@chakra-ui/react"
+import { Modal, TextInput } from "@mantine/core"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useSaveFriendMutation } from "../../../../hooks/trpc/friend/useSaveFriendMutation"
@@ -55,29 +44,19 @@ const FriendModal = (props: Props) => {
   }, [isOpen])
 
   return (
-    <Modal isOpen={isOpen} onClose={closeModal} size="xl">
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          {watch("id") ? "Edit Friend" : "Create Friend"}
-        </ModalHeader>
-        <ModalCloseButton />
+    <Modal
+      opened={isOpen}
+      onClose={closeModal}
+      size="xl"
+      title={watch("id") ? "Edit Friend" : "Create Friend"}
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextInput label="Name" {...register("name")} autoComplete="off" />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ModalBody>
-            <FormControl>
-              <FormLabel>Name</FormLabel>
-              <Input {...register("name")} autoComplete="off" />
-            </FormControl>
-          </ModalBody>
+        <SaveCancelButtons onCancel={closeModal} />
+      </form>
 
-          <ModalFooter>
-            <SaveCancelButtons onCancel={closeModal} />
-          </ModalFooter>
-        </form>
-
-        {watch("id") && <FriendInterestsTable friendId={watch("id")!} />}
-      </ModalContent>
+      {watch("id") && <FriendInterestsTable friendId={watch("id")!} />}
     </Modal>
   )
 }

@@ -1,7 +1,7 @@
-import { Input } from "@chakra-ui/react"
+import { TextInput } from "@mantine/core"
 import React from "react"
 
-type Props = React.ComponentProps<typeof Input> & {
+type Props = React.ComponentProps<typeof TextInput> & {
   onCtrlEnter?: (e: React.KeyboardEvent<HTMLDivElement>) => void
   onClickClearIcon?: () => void
 }
@@ -9,7 +9,7 @@ type Props = React.ComponentProps<typeof Input> & {
 const MyTextField = React.forwardRef<HTMLInputElement, Props>(
   ({ onCtrlEnter = (e) => {}, ...props }, ref) => {
     return (
-      <Input
+      <TextInput
         autoComplete="off"
         size="sm"
         ref={ref}

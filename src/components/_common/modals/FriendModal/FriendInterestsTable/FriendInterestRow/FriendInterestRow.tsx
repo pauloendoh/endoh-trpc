@@ -1,4 +1,3 @@
-import { Td, Tr } from "@chakra-ui/react"
 import { useEffect, useMemo, useState } from "react"
 import { useFriendInterestsQuery } from "../../../../../../hooks/trpc/friend-interest/useFriendInterestsQuery"
 import { useSaveFriendInterestMutation } from "../../../../../../hooks/trpc/friend-interest/useSaveFriendInterestMutation"
@@ -34,16 +33,18 @@ const FriendInterestRow = (props: Props) => {
   }, [friendInterest])
 
   return (
-    <Tr>
-      <Td>{props.interest.name}</Td>
-      <Td isNumeric>
+    <tr>
+      <td>{props.interest.name}</td>
+      <td>
         <MyNumberInput
           w={20}
           min={0}
           max={3}
           value={localMyInterestLevel}
-          onChange={(valueString) => {
-            const value = parseInt(valueString)
+          onChange={(rawValue) => {
+            const value =
+              typeof rawValue === "string" ? parseInt(rawValue) : rawValue
+
             setLocalMyInterestLevel(value)
             submitMyInterest({
               id: props.interest.id,
@@ -52,16 +53,19 @@ const FriendInterestRow = (props: Props) => {
             })
           }}
         />
-      </Td>
+      </td>
 
-      <Td isNumeric>
+      <td>
         <MyNumberInput
           w={20}
           min={0}
           max={3}
           value={localFriendInterestLevel}
           onChange={(valueString) => {
-            const value = parseInt(valueString)
+            const value =
+              typeof valueString === "string"
+                ? parseInt(valueString)
+                : valueString
             setLocalFriendInterestLevel(value)
 
             submitFriendInterest({
@@ -71,8 +75,8 @@ const FriendInterestRow = (props: Props) => {
             })
           }}
         />
-      </Td>
-    </Tr>
+      </td>
+    </tr>
   )
 }
 

@@ -2,10 +2,9 @@ import { QueryClient } from "@tanstack/react-query"
 import { TRPCClientErrorLike } from "@trpc/client"
 import { useState } from "react"
 import { AppRouter } from "../../trpcServer/routers/appRouter"
-import { useMyNotifications } from "../useMyNotifications"
+import { myNotifications } from "../../utils/mantine/myNotifications"
 
 export const useMyQueryClient = () => {
-  const { setErrorMessage } = useMyNotifications()
   const [queryClient] = useState(
     new QueryClient({
       defaultOptions: {
@@ -15,7 +14,7 @@ export const useMyQueryClient = () => {
             const fieldErrors = error.data?.zodError?.fieldErrors || {}
 
             Object.values(fieldErrors).forEach((value) => {
-              setErrorMessage(`${value?.[0]}`)
+              myNotifications.error(`${value?.[0]}`)
             })
           },
         },

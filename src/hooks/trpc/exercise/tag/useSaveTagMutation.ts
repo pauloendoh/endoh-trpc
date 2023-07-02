@@ -1,13 +1,11 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { getQueryKey } from "@trpc/react-query"
 import { pushOrReplace } from "endoh-utils"
+import { myNotifications } from "../../../../utils/mantine/myNotifications"
 import { trpc } from "../../../../utils/trpc/trpc"
-import { useMyNotifications } from "../../../useMyNotifications"
 
 export const useSaveTagMutation = () => {
   const queryClient = useQueryClient()
-
-  const { setSuccessMessage } = useMyNotifications()
 
   return trpc.exercise.saveTag.useMutation({
     onSuccess: async (saved, input) => {
@@ -17,7 +15,7 @@ export const useSaveTagMutation = () => {
         pushOrReplace(curr, saved, "id")
       )
 
-      setSuccessMessage("Tag saved")
+      myNotifications.success("Tag saved")
     },
   })
 }
