@@ -13,6 +13,9 @@ export class ExerciseRepository {
       include: {
         tags: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     })
   }
 
@@ -97,6 +100,23 @@ export class ExerciseRepository {
     return this.prisma.exerciseTag.findMany({
       where: {
         userId: requesterId,
+      },
+    })
+  }
+
+  updateLastCompletedAt(params: {
+    exerciseId: string
+    lastCompletedAt: string | null
+  }) {
+    return this.prisma.exercise.update({
+      where: {
+        id: params.exerciseId,
+      },
+      data: {
+        lastCompletedAt: params.lastCompletedAt,
+      },
+      include: {
+        tags: true,
       },
     })
   }

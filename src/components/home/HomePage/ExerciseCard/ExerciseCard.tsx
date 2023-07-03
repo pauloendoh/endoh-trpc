@@ -1,20 +1,28 @@
 import { Flex, Text } from "@mantine/core"
+import { useMemo } from "react"
 import { ExerciseOutput } from "../../../../hooks/trpc/exercise/types/ExerciseOutput"
 import FlexCol from "../../../_common/flexboxes/FlexCol"
 import FlexVCenter from "../../../_common/flexboxes/FlexVCenter"
 import MyPaper from "../../../_common/flexboxes/MyPaper"
 import Span from "../../../_common/text/Span"
 import ExerciseCardMoreMenu from "./ExerciseCardMoreMenu/ExerciseCardMoreMenu"
+import ExerciseCompletedSection from "./ExerciseCompletedSection/ExerciseCompletedSection"
+import { exerciseIsCompleted } from "./ExerciseCompletedSection/exerciseIsCompleted/exerciseIsCompleted"
 
 type Props = {
   exercise: ExerciseOutput
 }
 
 const ExerciseCard = (props: Props) => {
+  const isCompleted = useMemo(() => {
+    return exerciseIsCompleted(props.exercise)
+  }, [props.exercise.lastCompletedAt])
   return (
     <MyPaper
       sx={{
         borderRadius: 4,
+
+        opacity: isCompleted ? 0.33 : 1,
       }}
     >
       <FlexCol>
@@ -63,6 +71,10 @@ const ExerciseCard = (props: Props) => {
             {props.exercise.description}
           </Text>
         )}
+
+        <FlexVCenter mt={8}>
+          <ExerciseCompletedSection exercise={props.exercise} />
+        </FlexVCenter>
       </FlexCol>
     </MyPaper>
   )

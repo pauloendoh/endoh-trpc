@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { protectedProcedure } from "../../middlewares/protectedProcedure"
 import { router } from "../../trpcServer"
 import { ExerciseService } from "./ExerciseService"
@@ -28,4 +29,20 @@ export const ExerciseRouter = router({
     const tags = await service.findTags(ctx.session.user.id)
     return tags
   }),
+
+  updateLastCompletedAt: protectedProcedure
+    .input(
+      z.object({
+        exerciseId: z.string(),
+        lastCompletedAt: z.string().nullable(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const exercise = await service.updateLastCompletedAt({
+        exerciseId: input.exerciseId,
+        lastCompletedAt: input.lastCompletedAt,
+        requesterId: ctx.session.user.id,
+      })
+      return exercise
+    }),
 })

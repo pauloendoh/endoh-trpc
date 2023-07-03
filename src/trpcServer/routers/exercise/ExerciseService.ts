@@ -53,4 +53,26 @@ export class ExerciseService {
   async findTags(requesterId: string) {
     return this.exerciseRepository.findTags(requesterId)
   }
+
+  async updateLastCompletedAt(params: {
+    requesterId: string
+    exerciseId: string
+    lastCompletedAt: string | null
+  }) {
+    const { requesterId, exerciseId, lastCompletedAt } = params
+    const isOwner = await this.exerciseRepository.isOwner(
+      requesterId,
+      exerciseId
+    )
+    if (!isOwner) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You are not the owner of this exercise",
+      })
+    }
+    return this.exerciseRepository.updateLastCompletedAt({
+      exerciseId,
+      lastCompletedAt,
+    })
+  }
 }

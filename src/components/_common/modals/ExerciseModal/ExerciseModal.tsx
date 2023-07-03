@@ -1,5 +1,5 @@
 import { Modal, Textarea, TextInput } from "@mantine/core"
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { Col, Row } from "react-grid-system"
 import { useForm } from "react-hook-form"
 import { useSaveExerciseMutation } from "../../../../hooks/trpc/exercise/useSaveExerciseMutation"
@@ -25,6 +25,7 @@ const ExerciseModal = (props: Props) => {
     register,
     setValue,
     setFocus,
+    getValues,
     formState: { errors },
   } = useForm<ExerciseInput>({
     defaultValues: initialValue || buildExerciseInput(),
@@ -56,6 +57,10 @@ const ExerciseModal = (props: Props) => {
       }
     }
   }, [isOpen, isMobile])
+
+  const isDisabled = useMemo(() => {
+    return JSON.stringify(watch()) === JSON.stringify(initialValue)
+  }, [watch(), initialValue])
 
   return (
     <Modal
@@ -102,6 +107,7 @@ const ExerciseModal = (props: Props) => {
           />
 
           <SaveCancelButtons
+            disabled={isDisabled}
             onCancel={closeModal}
             onEnabledAndCtrlEnter={() => onSubmit(watch())}
           />

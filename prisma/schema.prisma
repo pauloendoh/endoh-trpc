@@ -91,9 +91,12 @@ model Exercise {
 
   imageUrl String?
 
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  tags      ExerciseTag[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lastCompletedAt DateTime?
+
+  tags ExerciseTag[]
 }
 
 model Friend {
