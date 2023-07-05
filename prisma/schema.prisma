@@ -53,6 +53,7 @@ model User {
   friends       Friend[]
   interests     Interest[]
   exerciseTags  ExerciseTag[]
+  clothings     Clothing[]
 }
 
 model VerificationToken {
@@ -150,4 +151,20 @@ model ExerciseTag {
   updatedAt DateTime @updatedAt
 
   exercises Exercise[]
+}
+
+model Clothing {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  imageUrl String
+
+  rating    Int
+  minDegree Int
+  maxDegree Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

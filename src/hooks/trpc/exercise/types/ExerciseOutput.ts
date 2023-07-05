@@ -5,3 +5,5 @@ type RouterOutput = inferRouterOutputs<AppRouter>
 
 export type ExerciseOutput = RouterOutput["exercise"]["myExercises"][0]
 export type TagOutput = RouterOutput["exercise"]["findTags"][0]
+
+export type ClothingOutput = RouterOutput["clothing"]["myClothings"][0]

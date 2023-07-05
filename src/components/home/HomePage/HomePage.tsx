@@ -1,12 +1,12 @@
 import { Box, Button, Container, useMantineColorScheme } from "@mantine/core"
 
-import { signOut } from "next-auth/react"
 import { useMemo, useState } from "react"
 import useExerciseModalStore from "../../../hooks/zustand/modals/useExerciseModalStore"
 import { buildExerciseInput } from "../../../trpcServer/routers/exercise/types/ExerciseInput"
 import { trpc } from "../../../utils/trpc/trpc"
 import FlexCol from "../../_common/flexboxes/FlexCol"
 import FlexVCenter from "../../_common/flexboxes/FlexVCenter"
+import LoggedLayout from "../../_common/layout/LoggedLayout/LoggedLayout"
 import ExerciseTagSelector from "../../_common/modals/ExerciseModal/ExerciseTagSelector/ExerciseTagSelector"
 import ExerciseCard from "./ExerciseCard/ExerciseCard"
 type Props = {}
@@ -35,38 +35,28 @@ const HomePage = (props: Props) => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme()
 
   return (
-    <Box>
-      <FlexVCenter>{user?.name}</FlexVCenter>
+    <LoggedLayout>
       <Box>
-        <Button onClick={() => signOut()}>Logout</Button>
-        <Button
-          onClick={() =>
-            toggleColorScheme(colorScheme === "light" ? "dark" : "light")
-          }
-        >
-          {colorScheme === "light" ? "Dark" : "Light"}
-        </Button>
+        <Container mt={16} size="xs" mb={120}>
+          <FlexVCenter justify={"space-between"}>
+            <ExerciseTagSelector
+              selectedTagIds={selectedTagIds}
+              onChange={setSelectedTagIds}
+              hideLabel
+              width={300}
+            />
+            <Button onClick={() => openModal(buildExerciseInput())}>
+              + Add Exercise
+            </Button>
+          </FlexVCenter>
+          <FlexCol gap={16} mt={16}>
+            {sortedExercises?.map((exercise) => (
+              <ExerciseCard key={exercise.id} exercise={exercise} />
+            ))}
+          </FlexCol>
+        </Container>
       </Box>
-
-      <Container mt={16} size="xs" mb={120}>
-        <FlexVCenter justify={"space-between"}>
-          <ExerciseTagSelector
-            selectedTagIds={selectedTagIds}
-            onChange={setSelectedTagIds}
-            hideLabel
-            width={300}
-          />
-          <Button onClick={() => openModal(buildExerciseInput())}>
-            + Add Exercise
-          </Button>
-        </FlexVCenter>
-        <FlexCol gap={16} mt={16}>
-          {sortedExercises?.map((exercise) => (
-            <ExerciseCard key={exercise.id} exercise={exercise} />
-          ))}
-        </FlexCol>
-      </Container>
-    </Box>
+    </LoggedLayout>
   )
 }
 

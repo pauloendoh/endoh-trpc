@@ -1,15 +1,12 @@
 const urls = {
   pages: {
     index: "/",
-    homeTechs: (techs: string[]) =>
-      `/?techs=${techs.map((tech, i) => {
-        if (i > 0) return `,${tech}`;
-        return tech;
-      })}`,
+    clothes: "/clothes",
+    playground: "/playground",
   },
   api: {
     creations: "/api/creations",
   },
-};
+}
 
-export default urls;
+export default urls
