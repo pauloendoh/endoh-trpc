@@ -8,6 +8,7 @@ import useExerciseModalStore from "../../../../hooks/zustand/modals/useExerciseM
 import {
   buildExerciseInput,
   ExerciseInput,
+  exerciseOutputToInput,
 } from "../../../../trpcServer/routers/exercise/types/ExerciseInput"
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
 import FlexCol from "../../flexboxes/FlexCol"
@@ -31,15 +32,15 @@ const ExerciseModal = (props: Props) => {
     defaultValues: initialValue || buildExerciseInput(),
   })
 
-  const { mutateAsync } = useSaveExerciseMutation()
+  const { mutateAsync, isLoading } = useSaveExerciseMutation()
 
   const onSubmit = async (data: ExerciseInput) => {
     data.pump = Number(data.pump)
     data.like = Number(data.like)
 
     mutateAsync(data, {
-      onSuccess: () => {
-        reset(data)
+      onSuccess: (saved) => {
+        reset(exerciseOutputToInput(saved))
       },
     })
   }
@@ -108,6 +109,7 @@ const ExerciseModal = (props: Props) => {
 
           <SaveCancelButtons
             disabled={isDisabled}
+            isLoading={isLoading}
             onCancel={closeModal}
             onEnabledAndCtrlEnter={() => onSubmit(watch())}
           />

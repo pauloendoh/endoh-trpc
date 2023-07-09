@@ -1,6 +1,6 @@
 import { router } from "../trpcServer"
 import { ClothingRouter } from "./clothing/ClothingRouter"
-import { ExerciseRouter } from "./exercise/ExerciseRouterV2"
+import { ExerciseRouter } from "./exercise/ExerciseRouter"
 import { FriendInterestRouter } from "./friend-interest/FriendInterestRouter"
 import { FriendsRouter } from "./friend/FriendRouter"
 import { InterestRouter } from "./interest/InterestRouter"

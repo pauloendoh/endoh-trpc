@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { ExerciseOutput } from "../../../../hooks/trpc/exercise/types/ExerciseOutput"
 
 export const exerciseInputSchema = z.object({
   id: z.string().optional(),
@@ -29,3 +30,23 @@ export const buildExerciseInput = (
   tagIds: [],
   ...p,
 })
+
+export function exerciseOutputToInput(output: ExerciseOutput): ExerciseInput {
+  const data: ExerciseInput = {
+    id: output.id,
+    title: output.title,
+    description: output.description,
+    pump: output.pump,
+    like: output.like,
+    imageUrl: output.imageUrl || undefined,
+    tagIds: output.tags.map((tag) => tag.id),
+  }
+
+  // validate
+  const result = exerciseInputSchema.safeParse(data)
+  if (!result.success) {
+    throw new Error(result.error.message)
+  }
+
+  return result.data
+}

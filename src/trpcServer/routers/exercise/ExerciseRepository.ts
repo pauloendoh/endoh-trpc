@@ -19,9 +19,9 @@ export class ExerciseRepository {
     })
   }
 
-  createExercise(requesterId: string, exercise: ExerciseInput) {
+  async createExercise(requesterId: string, exercise: ExerciseInput) {
     const { tagIds, ...rest } = exercise
-    return this.prisma.exercise.create({
+    const created = await this.prisma.exercise.create({
       data: {
         user: {
           connect: {
@@ -37,6 +37,7 @@ export class ExerciseRepository {
         tags: true,
       },
     })
+    return created
   }
 
   isOwner = async (requesterId: string, exerciseId: string) => {

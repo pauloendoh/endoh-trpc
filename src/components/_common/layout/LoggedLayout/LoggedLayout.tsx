@@ -1,6 +1,7 @@
 import { Box, Button, Header, Title } from "@mantine/core"
 import { signOut } from "next-auth/react"
 import React from "react"
+import { useMyMediaQuery } from "../../../../hooks/useMyMediaQuery"
 import { trpc } from "../../../../utils/trpc/trpc"
 import urls from "../../../../utils/urls"
 import FlexVCenter from "../../flexboxes/FlexVCenter"
@@ -13,11 +14,13 @@ type Props = {
 const LoggedLayout = ({ ...props }: Props) => {
   const { data: user, refetch } = trpc.user.me.useQuery()
 
+  const { isMobile } = useMyMediaQuery()
+
   return (
     <Box>
       <Header height={60}>
         <FlexVCenter px={24} h="100%" justify={"space-between"}>
-          <Title order={4}>tRPC</Title>
+          {!isMobile && <Title order={4}>tRPC</Title>}
 
           <FlexVCenter gap={16}>
             <MyNextLink href={urls.pages.index}>Exercises</MyNextLink>
@@ -26,7 +29,7 @@ const LoggedLayout = ({ ...props }: Props) => {
           </FlexVCenter>
 
           <FlexVCenter gap={16}>
-            <FlexVCenter>{user?.name}</FlexVCenter>
+            {/* <FlexVCenter>{user?.name}</FlexVCenter>isMobile */}
             <Button onClick={() => signOut()}>Logout</Button>
           </FlexVCenter>
         </FlexVCenter>
