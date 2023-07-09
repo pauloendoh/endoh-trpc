@@ -1,4 +1,4 @@
-import { Box, Button, Container, useMantineColorScheme } from "@mantine/core"
+import { Box, Button, Container } from "@mantine/core"
 
 import { useMemo, useState } from "react"
 import useExerciseModalStore from "../../../hooks/zustand/modals/useExerciseModalStore"
@@ -9,10 +9,10 @@ import FlexVCenter from "../../_common/flexboxes/FlexVCenter"
 import LoggedLayout from "../../_common/layout/LoggedLayout/LoggedLayout"
 import ExerciseTagSelector from "../../_common/modals/ExerciseModal/ExerciseTagSelector/ExerciseTagSelector"
 import ExerciseCard from "./ExerciseCard/ExerciseCard"
+
 type Props = {}
 
 const HomePage = (props: Props) => {
-  const { data: user, refetch } = trpc.user.me.useQuery()
   const { openModal } = useExerciseModalStore()
   const { data: exercises } = trpc.exercise.myExercises.useQuery()
 
@@ -32,8 +32,6 @@ const HomePage = (props: Props) => {
       })
   }, [exercises, selectedTagIds])
 
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
-
   return (
     <LoggedLayout>
       <Box>
@@ -45,7 +43,15 @@ const HomePage = (props: Props) => {
               hideLabel
               width={300}
             />
-            <Button onClick={() => openModal(buildExerciseInput())}>
+            <Button
+              onClick={() =>
+                openModal(
+                  buildExerciseInput({
+                    tagIds: selectedTagIds,
+                  })
+                )
+              }
+            >
               + Add Exercise
             </Button>
           </FlexVCenter>

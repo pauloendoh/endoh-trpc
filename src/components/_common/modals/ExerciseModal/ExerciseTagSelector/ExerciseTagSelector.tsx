@@ -14,7 +14,7 @@ type Props = {
 const ExerciseTagSelector = (props: Props) => {
   const { openModal } = useExerciseTagModalStore()
 
-  const { data: tags } = useTagsQuery()
+  const { data: allTags } = useTagsQuery()
 
   const handleChange = (values: string[]) => {
     if (values?.includes("addNewTag")) {
@@ -31,16 +31,16 @@ const ExerciseTagSelector = (props: Props) => {
       value: "addNewTag",
     }
 
-    if (!tags) return [newTagOption]
+    if (!allTags) return [newTagOption]
 
     return [
       newTagOption,
-      ...tags.map((tag) => ({
+      ...allTags.map((tag) => ({
         label: tag.name,
         value: tag.id,
       })),
     ]
-  }, [tags])
+  }, [allTags])
 
   const inputRef = useRef<HTMLInputElement>(null)
 
