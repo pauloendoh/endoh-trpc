@@ -121,4 +121,12 @@ export class ExerciseRepository {
       },
     })
   }
+
+  deleteExercise(exerciseId: string) {
+    return this.prisma.exercise.delete({
+      where: {
+        id: exerciseId,
+      },
+    })
+  }
 }

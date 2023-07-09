@@ -18,6 +18,13 @@ export const ExerciseRouter = router({
       const exercise = await service.saveExercise(ctx.session.user.id, input)
       return exercise
     }),
+  deleteExercise: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const exercise = await service.deleteExercise(ctx.session.user.id, input)
+      return exercise
+    }),
+
   saveTag: protectedProcedure
     .input(tagInputSchema)
     .mutation(async ({ ctx, input }) => {

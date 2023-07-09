@@ -75,4 +75,18 @@ export class ExerciseService {
       lastCompletedAt,
     })
   }
+
+  async deleteExercise(requesterId: string, exerciseId: string) {
+    const isOwner = await this.exerciseRepository.isOwner(
+      requesterId,
+      exerciseId
+    )
+    if (!isOwner) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You are not the owner of this exercise",
+      })
+    }
+    return this.exerciseRepository.deleteExercise(exerciseId)
+  }
 }
