@@ -35,5 +35,8 @@ export const trpc = createTRPCNext<AppRouter>({
   /**
    * @link https://trpc.io/docs/ssr
    **/
+
+  // turned off because... I don't remember xD
+  // while I was creating clothes page
   ssr: false,
 })

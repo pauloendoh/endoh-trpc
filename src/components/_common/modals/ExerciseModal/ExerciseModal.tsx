@@ -80,7 +80,7 @@ const ExerciseModal = (props: Props) => {
           <Row>
             <Col xs={6}>
               <MyNumberInput
-                {...register("pump")}
+                value={watch("pump")}
                 label="Pump"
                 onChange={(value) => setValue("pump", Number(value))}
                 min={0}
@@ -90,7 +90,7 @@ const ExerciseModal = (props: Props) => {
             </Col>
             <Col xs={6}>
               <MyNumberInput
-                {...register("like")}
+                value={watch("like")}
                 onChange={(value) => setValue("like", Number(value))}
                 min={0}
                 max={5}

@@ -6,7 +6,8 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "next dev -p 3002",
+    "dev": "npm-run-all --parallel dev:2 typesafe-i18n",
+    "dev:2": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -17,7 +18,8 @@
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "plop": "plop",
     "gen": "plop",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "typesafe-i18n": "typesafe-i18n"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.363.0",
@@ -41,6 +43,7 @@
     "@tabler/icons-react": "^2.23.0",
     "@tanstack/react-query": "^4.19.1",
     "@tanstack/react-query-devtools": "^4.29.3",
+    "@tanstack/react-table": "^8.9.3",
     "@tiptap/extension-highlight": "^2.0.3",
     "@tiptap/extension-image": "^2.0.3",
     "@tiptap/extension-link": "^2.0.3",
@@ -69,6 +72,7 @@
     "react-hook-form": "^7.39.1",
     "react-icons": "^4.3.1",
     "timeago.js": "^4.0.0-beta.3",
+    "typesafe-i18n": "^5.24.4",
     "zod": "^3.19.1",
     "zustand": "^4.3.7"
   },
@@ -84,6 +88,7 @@
     "eslint": "^8.38.0",
     "eslint-config-next": "13.3.0",
     "husky": "^8.0.3",
+    "npm-run-all": "^4.1.5",
     "plop": "^3.1.2",
     "postcss": "^8.4.25",
     "prisma": "^4.16.2",

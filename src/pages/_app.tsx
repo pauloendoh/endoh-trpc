@@ -15,6 +15,10 @@ import { useEffect, useState } from "react"
 import GlobalModals from "../components/_common/modals/GlobalModals"
 import { useMyQueryClient } from "../hooks/react-query/useMyQueryClient"
 import useScreenSizeStore from "../hooks/zustand/useScreenSizeStore"
+import TypesafeI18n from "../i18n/i18n-react"
+import { Locales, Translation } from "../i18n/i18n-types"
+import { loadedLocales } from "../i18n/i18n-util"
+import { loadFormatters } from "../i18n/i18n-util.async"
 import { myTheme } from "../utils/mantine/myTheme"
 import { trpc } from "../utils/trpc/trpc"
 import "./global.css"
@@ -22,6 +26,10 @@ import "./global.css"
 interface MyAppProps
   extends AppProps<{
     session: Session
+    i18n?: {
+      locale: Locales
+      dictionary: any
+    }
   }> {}
 
 function MyApp(props: MyAppProps) {
@@ -44,6 +52,14 @@ function MyApp(props: MyAppProps) {
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"))
 
+  const locale = pageProps.i18n?.locale || "en"
+  const dictionary = pageProps.i18n?.dictionary
+
+  if (locale && dictionary) {
+    loadedLocales[locale] = dictionary as Translation
+    loadFormatters(locale)
+  }
+
   return (
     <>
       <Head>
@@ -54,39 +70,41 @@ function MyApp(props: MyAppProps) {
         />
       </Head>
 
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
-      >
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            ...myTheme,
-            colorScheme,
-          }}
+      <TypesafeI18n locale={locale}>
+        <ColorSchemeProvider
+          colorScheme={colorScheme}
+          toggleColorScheme={toggleColorScheme}
         >
-          <Notifications
-            position="bottom-center"
-            // zIndex={zIndexes.notification}
-          />
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              ...myTheme,
+              colorScheme,
+            }}
+          >
+            <Notifications
+              position="bottom-center"
+              // zIndex={zIndexes.notification}
+            />
 
-          <SessionProvider session={props.pageProps.session}>
-            <QueryClientProvider client={myQueryClient}>
-              <Head>
-                <meta
-                  name="viewport"
-                  content="initial-scale=1, width=device-width"
-                />
-              </Head>
+            <SessionProvider session={props.pageProps.session}>
+              <QueryClientProvider client={myQueryClient}>
+                <Head>
+                  <meta
+                    name="viewport"
+                    content="initial-scale=1, width=device-width"
+                  />
+                </Head>
 
-              <Component {...pageProps} />
-              <GlobalModals />
-              <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
-          </SessionProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
+                <Component {...pageProps} />
+                <GlobalModals />
+                <ReactQueryDevtools initialIsOpen={false} />
+              </QueryClientProvider>
+            </SessionProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </TypesafeI18n>
     </>
   )
 }
