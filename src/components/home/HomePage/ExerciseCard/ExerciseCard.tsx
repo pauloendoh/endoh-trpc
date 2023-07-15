@@ -1,4 +1,5 @@
-import { Flex, Text } from "@mantine/core"
+import { Divider, Flex, Text } from "@mantine/core"
+
 import { useMemo } from "react"
 import { ExerciseOutput } from "../../../../hooks/trpc/exercise/types/ExerciseOutput"
 import FlexCol from "../../../_common/flexboxes/FlexCol"
@@ -59,6 +60,8 @@ const ExerciseCard = (props: Props) => {
           <Text w={100}>Pump: {props.exercise.pump}</Text>
           <Text>Int: {props.exercise.like}</Text>
         </FlexVCenter>
+
+        <Divider my={8} />
 
         {!!props.exercise.description && (
           <Text

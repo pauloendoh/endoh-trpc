@@ -1,5 +1,7 @@
 import { Box, Button, Header, Title } from "@mantine/core"
+import { motion } from "framer-motion"
 import { signOut } from "next-auth/react"
+import { useRouter } from "next/router"
 import React from "react"
 import { useMyMediaQuery } from "../../../../hooks/useMyMediaQuery"
 import { trpc } from "../../../../utils/trpc/trpc"
@@ -11,10 +13,18 @@ type Props = {
   children?: React.ReactNode
 }
 
+const links = [
+  { href: urls.pages.index, label: "Exercises" },
+  { href: urls.pages.clothes, label: "Clothes" },
+  { href: urls.pages.playground, label: "Playground" },
+]
+
 const LoggedLayout = ({ ...props }: Props) => {
   const { data: user, refetch } = trpc.user.me.useQuery()
 
   const { isMobile } = useMyMediaQuery()
+
+  const path = useRouter().pathname
 
   return (
     <Box>
@@ -23,9 +33,18 @@ const LoggedLayout = ({ ...props }: Props) => {
           {!isMobile && <Title order={4}>tRPC</Title>}
 
           <FlexVCenter gap={16}>
-            <MyNextLink href={urls.pages.index}>Exercises</MyNextLink>
-            <MyNextLink href={urls.pages.clothes}>Clothes</MyNextLink>
-            <MyNextLink href={urls.pages.playground}>Playground</MyNextLink>
+            {links.map((link) => (
+              <MyNextLink className="relative" key={link.href} href={link.href}>
+                {path === link.href && (
+                  <motion.span
+                    layoutId="underline"
+                    className="absolute left-0 top-full block h-[1px] w-full bg-white"
+                  />
+                )}
+
+                {link.label}
+              </MyNextLink>
+            ))}
           </FlexVCenter>
 
           <FlexVCenter gap={16}>
@@ -34,7 +53,22 @@ const LoggedLayout = ({ ...props }: Props) => {
           </FlexVCenter>
         </FlexVCenter>
       </Header>
-      {props.children}
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        exit={{
+          opacity: 0,
+          y: 20,
+        }}
+      >
+        {props.children}
+      </motion.div>
     </Box>
   )
 }

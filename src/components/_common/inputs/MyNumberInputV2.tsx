@@ -1,9 +1,11 @@
 import { NumberInput } from "@mantine/core"
 import React from "react"
 
-type Props = React.ComponentProps<typeof NumberInput>
+type Props = React.ComponentProps<typeof NumberInput> & {
+  precision: number
+}
 
-const MyNumberInput = React.forwardRef<HTMLInputElement, Props>(
+const MyNumberInputV2 = React.forwardRef<HTMLInputElement, Props>(
   ({ ...props }, ref) => {
     return (
       <NumberInput
@@ -13,9 +15,10 @@ const MyNumberInput = React.forwardRef<HTMLInputElement, Props>(
         removeTrailingZeros
         ref={ref}
         {...props}
+        precision={props.precision}
       />
     )
   }
 )
 
-export default MyNumberInput
+export default MyNumberInputV2
