@@ -3,6 +3,7 @@ const urls = {
     index: "/",
     clothes: "/clothes",
     playground: "/playground",
+    wasted: "/wasted",
   },
   api: {
     creations: "/api/creations",

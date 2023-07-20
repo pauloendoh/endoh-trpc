@@ -12,7 +12,7 @@
     "start": "next start -p 3002",
     "lint": "next lint",
     "generate": "prisma generate",
-    "migrate": "prisma migrate dev",
+    "migrate": "prisma migrate dev && prisma generate",
     "studio": "prisma studio",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",

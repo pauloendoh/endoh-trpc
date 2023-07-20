@@ -16,6 +16,7 @@ type Props = {
 const links = [
   { href: urls.pages.index, label: "Exercises" },
   { href: urls.pages.clothes, label: "Clothes" },
+  { href: urls.pages.wasted, label: "Wasted" },
   { href: urls.pages.playground, label: "Playground" },
 ]
 

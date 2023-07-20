@@ -3,4 +3,4 @@ import { AppRouter } from "../../appRouter"
 
 type RouterOutput = inferRouterOutputs<AppRouter>
 
-export type {{pascalCase name}}Output = RouterOutput["{{camelCase name}}"]["my{{pascalCase name}}s"][0]
+export type FavoriteOutput = RouterOutput["favorite"]["myFavorites"][0]
