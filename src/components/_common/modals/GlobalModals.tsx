@@ -3,6 +3,7 @@ import ExerciseModal from "./ExerciseModal/ExerciseModal"
 import ExerciseTagModal from "./ExerciseTagModal/ExerciseTagModal"
 import FavoriteModal from "./FavoriteModal/FavoriteModal"
 import FriendModal from "./FriendModal/FriendModal"
+import IndulgenceModal from "./IndulgenceModal/IndulgenceModal"
 import InterestModal from "./InterestModal/InterestModal"
 import WastedModal from "./WastedModal/WastedModal"
 
@@ -18,6 +19,7 @@ const GlobalModals = (props: Props) => {
       <ClothingModal />
       <WastedModal />
       <FavoriteModal />
+      <IndulgenceModal />
     </>
   )
 }

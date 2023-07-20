@@ -5,6 +5,7 @@ const urls = {
     playground: "/playground",
     wasted: "/wasted",
     favorites: "/favorites",
+    indulgence: "/indulgence",
   },
   api: {
     creations: "/api/creations",

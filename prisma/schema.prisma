@@ -56,6 +56,7 @@ model User {
   clothings     Clothing[]
   wasteds       Wasted[]
   favorites     Favorite[]
+  indulgences   Indulgence[]
 }
 
 model VerificationToken {
@@ -196,4 +197,17 @@ model Favorite {
   clickCount Int
   title      String
   thumbnail  String
+}
+
+model Indulgence {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  title  String
+  points Int
+  date   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,8 +1,13 @@
 import { NumberInput } from "@mantine/core"
 import React from "react"
 
-type Props = React.ComponentProps<typeof NumberInput> & {
+type Props = Omit<
+  React.ComponentProps<typeof NumberInput>,
+  "value" | "onChange"
+> & {
   precision: number
+  value: number
+  onChange: (value: number) => void
 }
 
 const MyNumberInputV2 = React.forwardRef<HTMLInputElement, Props>(
@@ -16,6 +21,14 @@ const MyNumberInputV2 = React.forwardRef<HTMLInputElement, Props>(
         ref={ref}
         {...props}
         precision={props.precision}
+        value={props.value}
+        onChange={(val) => {
+          if (val === "") {
+            props.onChange(0)
+            return
+          }
+          props.onChange(val)
+        }}
       />
     )
   }

@@ -4,7 +4,6 @@ import { signOut } from "next-auth/react"
 import { useRouter } from "next/router"
 import React from "react"
 import { useMyMediaQuery } from "../../../../hooks/useMyMediaQuery"
-import { trpc } from "../../../../utils/trpc/trpc"
 import urls from "../../../../utils/urls"
 import FlexVCenter from "../../flexboxes/FlexVCenter"
 import MyNextLink from "../../next/MyNextLink"
@@ -17,12 +16,11 @@ const links = [
   { href: urls.pages.index, label: "Exercises" },
   { href: urls.pages.clothes, label: "Clothes" },
   { href: urls.pages.wasted, label: "Wasted" },
+  { href: urls.pages.indulgence, label: "Indulgence" },
   { href: urls.pages.playground, label: "Playground" },
 ]
 
 const LoggedLayout = ({ ...props }: Props) => {
-  const { data: user, refetch } = trpc.user.me.useQuery()
-
   const { isMobile } = useMyMediaQuery()
 
   const path = useRouter().pathname
