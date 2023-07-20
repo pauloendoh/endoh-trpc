@@ -205,7 +205,7 @@ model Indulgence {
   userId String
 
   title  String
-  points Int
+  points Decimal
   date   DateTime
 
   createdAt DateTime @default(now())

@@ -60,7 +60,7 @@ const IndulgenceModal = (props: Props) => {
 
           <Flex gap={16}>
             <MyNumberInputV2
-              precision={0}
+              precision={2}
               value={form.watch("points")}
               label="Points"
               onChange={(value) => {

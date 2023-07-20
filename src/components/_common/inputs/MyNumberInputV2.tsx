@@ -6,7 +6,7 @@ type Props = Omit<
   "value" | "onChange"
 > & {
   precision: number
-  value: number
+  value: number | undefined
   onChange: (value: number) => void
 }
 
@@ -21,7 +21,7 @@ const MyNumberInputV2 = React.forwardRef<HTMLInputElement, Props>(
         ref={ref}
         {...props}
         precision={props.precision}
-        value={props.value}
+        value={Number(props.value)}
         onChange={(val) => {
           if (val === "") {
             props.onChange(0)

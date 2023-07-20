@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Indulgence" ALTER COLUMN "points" SET DATA TYPE DECIMAL(65,30);
