@@ -4,6 +4,7 @@ const urls = {
     clothes: "/clothes",
     playground: "/playground",
     wasted: "/wasted",
+    favorites: "/favorites",
   },
   api: {
     creations: "/api/creations",
