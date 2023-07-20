@@ -1,14 +1,14 @@
-import { Indulgence } from "@prisma/client"
+import { IndulgencePayload } from "@prisma/client"
 import { z } from "zod"
 import { IndulgenceOutput } from "./IndulgenceOutput"
 
-let x: Indulgence
+let x: IndulgencePayload
 
 /**
  * id: string
     userId: string
     title: string
-    points: number
+    points: Prisma.Decimal
     date: Date
     createdAt: Date
     updatedAt: Date
@@ -38,7 +38,7 @@ export const indulgenceOutputToInput = (
   return {
     id: output.id,
     title: output.title,
-    points: output.points,
+    points: Number(output.points),
     date: output.date,
   }
 }
