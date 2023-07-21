@@ -1,12 +1,13 @@
 import { Calendar } from "@mantine/dates"
 
-import { Center, Container, Title, useMantineTheme } from "@mantine/core"
+import { Center, Container, Title } from "@mantine/core"
 import { useIndulgencesQuery } from "../../hooks/trpc/indulgence/useIndulgencesQuery"
 import useIndulgenceModalStore from "../../hooks/zustand/modals/useIndulgenceModalStore"
 import {
   buildIndulgenceInput,
   indulgenceOutputToInput,
 } from "../../trpcServer/routers/indulgence/types/IndulgenceInput"
+import CenterLoader from "../_common/flexboxes/CenterLoader/CenterLoader"
 import FlexCol from "../_common/flexboxes/FlexCol"
 import LoggedLayout from "../_common/layout/LoggedLayout/LoggedLayout"
 import CalendarDay from "./CalendarDay/CalendarDay"
@@ -14,13 +15,13 @@ import CalendarDay from "./CalendarDay/CalendarDay"
 type Props = {}
 
 const IndulgencePage = ({ ...props }: Props) => {
-  const theme = useMantineTheme()
   const { openModal } = useIndulgenceModalStore()
-  const { data: myIndulgences } = useIndulgencesQuery()
+  const { data: myIndulgences, isLoading } = useIndulgencesQuery()
 
   return (
     <LoggedLayout>
       <Container mt={40} mx="auto">
+        {isLoading && <CenterLoader />}
         <Center>
           <FlexCol gap={16}>
             <Title order={4}>Indulgence</Title>
