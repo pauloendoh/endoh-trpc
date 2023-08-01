@@ -37,13 +37,11 @@ const WastedModal = (props: Props) => {
     if (isOpen) {
       form.reset(initialValue || buildWastedInput())
 
-      if (!isMobile) {
-        setTimeout(() => {
-          form.setFocus("minutes")
-        }, 200)
-      }
+      setTimeout(() => {
+        form.setFocus("minutes")
+      }, 200)
     }
-  }, [isOpen, isMobile])
+  }, [isOpen])
 
   return (
     <Modal

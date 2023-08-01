@@ -1,4 +1,5 @@
-import { Flex, Modal, TextInput } from "@mantine/core"
+import { Flex, Modal, Textarea } from "@mantine/core"
+import { upToNDecimals } from "endoh-utils"
 import { useEffect, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { useIndulgencesQuery } from "../../../../hooks/trpc/indulgence/useIndulgencesQuery"
@@ -72,7 +73,7 @@ const IndulgenceModal = (props: Props) => {
       }
     }
 
-    return sum
+    return upToNDecimals(sum, 2)
   }, [form.getValues("date")])
 
   return (
@@ -83,7 +84,7 @@ const IndulgenceModal = (props: Props) => {
     >
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FlexCol gap={16}>
-          <TextInput label="Title" {...form.register("title")} />
+          <Textarea label="Description" {...form.register("title")} autosize />
 
           <Flex gap={16}>
             <MyNumberInputV2
@@ -94,6 +95,7 @@ const IndulgenceModal = (props: Props) => {
                 form.setValue("points", value)
               }}
               w={80}
+              step={0.1}
             />
           </Flex>
 
