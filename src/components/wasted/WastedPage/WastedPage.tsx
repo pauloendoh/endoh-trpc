@@ -54,7 +54,8 @@ const WastedPage = ({ ...props }: Props) => {
                       O Caminho é como a Natureza, a única coisa que odeia é a
                       estagnação...
                     </b>{" "}
-                    e meu único esforço deve ser o de não gastar tempo.
+                    e meu único esforço deve ser o de não gastar tempo. Pense
+                    enquanto faz.
                   </i>
                 </Span>
                 <Table
