@@ -6,6 +6,7 @@ import { buildWastedInput } from "../../../trpcServer/routers/wasted/types/Waste
 import CenterLoader from "../../_common/flexboxes/CenterLoader/CenterLoader"
 import FlexCol from "../../_common/flexboxes/FlexCol"
 import LoggedLayout from "../../_common/layout/LoggedLayout/LoggedLayout"
+import Span from "../../_common/text/Span"
 
 type Props = {}
 
@@ -47,6 +48,15 @@ const WastedPage = ({ ...props }: Props) => {
           >
             <Center>
               <FlexCol gap={16}>
+                <Span maw={200} align="center">
+                  <i>
+                    <b>
+                      O Caminho é como a Natureza, a única coisa que odeia é a
+                      estagnação...
+                    </b>{" "}
+                    e meu único esforço deve ser o de não gastar tempo.
+                  </i>
+                </Span>
                 <Table
                   withColumnBorders
                   highlightOnHover
