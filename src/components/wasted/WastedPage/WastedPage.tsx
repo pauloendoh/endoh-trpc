@@ -43,7 +43,7 @@ const WastedPage = ({ ...props }: Props) => {
           <Container
             size="md"
             sx={{
-              marginTop: 40,
+              marginTop: 16,
             }}
           >
             <Center>
