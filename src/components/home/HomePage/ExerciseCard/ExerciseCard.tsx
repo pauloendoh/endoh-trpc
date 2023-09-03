@@ -38,7 +38,7 @@ const ExerciseCard = (props: Props) => {
         </FlexVCenter>
 
         {!!props.exercise.tags.length && (
-          <Flex>
+          <Flex gap={4}>
             {props.exercise.tags.map((tag) => (
               <Span
                 key={tag.id}
@@ -50,7 +50,7 @@ const ExerciseCard = (props: Props) => {
                 py={4}
                 size="xs"
               >
-                #{tag.name}
+                {tag.name}
               </Span>
             ))}
           </Flex>
