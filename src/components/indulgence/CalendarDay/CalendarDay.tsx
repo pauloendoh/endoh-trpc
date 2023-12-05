@@ -14,21 +14,23 @@ const CalendarDay = ({ ...props }: Props) => {
   const count = useMemo(() => {
     if (!data) return null
 
-    const found = data.find(
+    const foundIndulgences = data.filter(
       (indulgence) =>
         indulgence.date.split("T")[0] === props.day.toISOString().split("T")[0]
     )
-    if (!found) {
-      return null
-    }
-    return found.points
+
+    if (!foundIndulgences.length) return null
+
+    return foundIndulgences.reduce((acc, indulgence) => {
+      return acc + Number(indulgence.points)
+    }, 0)
   }, [data, props.day])
 
   return (
     <Indicator
       color="red"
       disabled={count === null}
-      label={!!count ? count : undefined}
+      label={count ?? undefined}
       size={16}
     >
       <Box

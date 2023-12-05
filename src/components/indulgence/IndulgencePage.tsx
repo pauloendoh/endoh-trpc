@@ -1,14 +1,14 @@
 import { Calendar } from "@mantine/dates"
 
-import { Center, Container, Title } from "@mantine/core"
+import { ActionIcon, Center, Container, Title } from "@mantine/core"
+import { MdAdd } from "react-icons/md"
 import { useIndulgencesQuery } from "../../hooks/trpc/indulgence/useIndulgencesQuery"
+import useDailyIndulgencesModalStore from "../../hooks/zustand/modals/useDailyIndulgencesModalStore"
 import useIndulgenceModalStore from "../../hooks/zustand/modals/useIndulgenceModalStore"
-import {
-  buildIndulgenceInput,
-  indulgenceOutputToInput,
-} from "../../trpcServer/routers/indulgence/types/IndulgenceInput"
+import { buildIndulgenceInput } from "../../trpcServer/routers/indulgence/types/IndulgenceInput"
 import CenterLoader from "../_common/flexboxes/CenterLoader/CenterLoader"
 import FlexCol from "../_common/flexboxes/FlexCol"
+import FlexVCenter from "../_common/flexboxes/FlexVCenter"
 import LoggedLayout from "../_common/layout/LoggedLayout/LoggedLayout"
 import CalendarDay from "./CalendarDay/CalendarDay"
 
@@ -17,6 +17,8 @@ type Props = {}
 const IndulgencePage = ({ ...props }: Props) => {
   const { openModal } = useIndulgenceModalStore()
   const { data: myIndulgences, isLoading } = useIndulgencesQuery()
+
+  const { openModal: openDailyIndulgences } = useDailyIndulgencesModalStore()
 
   return (
     <LoggedLayout>
@@ -28,25 +30,42 @@ const IndulgencePage = ({ ...props }: Props) => {
             <Calendar
               weekendDays={[]}
               __onDayClick={(_, date) => {
-                const selectedDate = date.toISOString().split("T")[0]
-                const foundIndulgence = myIndulgences?.find(
-                  (indulgence) => indulgence.date.split("T")[0] === selectedDate
-                )
-                if (foundIndulgence) {
-                  openModal(indulgenceOutputToInput(foundIndulgence))
-                  return
-                }
-                openModal(
-                  buildIndulgenceInput({
-                    date: date.toISOString(),
-                  })
-                )
+                openDailyIndulgences(date)
+                // const selectedDate = date.toISOString().split("T")[0]
+                // const foundIndulgence = myIndulgences?.find(
+                //   (indulgence) => indulgence.date.split("T")[0] === selectedDate
+                // )
+                // if (foundIndulgence) {
+                //   openModal(indulgenceOutputToInput(foundIndulgence))
+                //   return
+                // }
+                // openModal(
+                //   buildIndulgenceInput({
+                //     date: date.toISOString(),
+                //   })
+                // )
               }}
               renderDay={(day) => {
                 const isHighlighted = new Date().getDate() === day.getDate()
                 return <CalendarDay day={day} isHighlighted={isHighlighted} />
               }}
             />
+
+            <FlexVCenter>
+              <ActionIcon
+                onClick={() => {
+                  openModal(
+                    buildIndulgenceInput({
+                      date: new Date().toISOString(),
+                    })
+                  )
+                }}
+                variant="filled"
+                color="primary"
+              >
+                <MdAdd />
+              </ActionIcon>
+            </FlexVCenter>
           </FlexCol>
         </Center>
       </Container>
