@@ -29,9 +29,15 @@ const IndulgencePage = ({ ...props }: Props) => {
         ) : (
           <Center>
             <FlexCol gap={16}>
-              <Title order={4}>Indulgence</Title>
+              <Title order={4} align="center">
+                Indulgence
+              </Title>
 
               <Calendar
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
                 weekendDays={[]}
                 __onDayClick={(_, date) => {
                   openDailyIndulgences(date)

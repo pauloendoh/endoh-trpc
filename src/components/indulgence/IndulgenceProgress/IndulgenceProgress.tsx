@@ -69,7 +69,7 @@ const IndulgenceProgress = ({ ...props }: Props) => {
         size="xl"
       />
       <Span size="sm">
-        {(settings?.maxPointsPerWeek || 0) - totalPoints} left (
+        {((settings?.maxPointsPerWeek || 0) - totalPoints).toFixed(1)} left (
         {resetsInNDaysLabel})
       </Span>
     </FlexCol>

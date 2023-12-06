@@ -58,10 +58,17 @@ const DailyIndulgencesModal = (props: Props) => {
                 justifyContent: "space-between",
                 fontSize: 14,
                 fontWeight: 500,
+                whiteSpace: "nowrap",
               },
             }}
           >
-            <span>{indulgence.title}</span>
+            <span
+              style={{
+                whiteSpace: "normal",
+              }}
+            >
+              {indulgence.title}
+            </span>
             <span>{indulgence.points}pts</span>
           </Button>
         ))}
