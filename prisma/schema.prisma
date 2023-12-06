@@ -40,23 +40,24 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(cuid())
-  name          String?
-  username      String?
-  email         String?       @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  Creation      Creation[]
-  exercises     Exercise[]
-  friends       Friend[]
-  interests     Interest[]
-  exerciseTags  ExerciseTag[]
-  clothings     Clothing[]
-  wasteds       Wasted[]
-  favorites     Favorite[]
-  indulgences   Indulgence[]
+  id                 String              @id @default(cuid())
+  name               String?
+  username           String?
+  email              String?             @unique
+  emailVerified      DateTime?
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
+  Creation           Creation[]
+  exercises          Exercise[]
+  friends            Friend[]
+  interests          Interest[]
+  exerciseTags       ExerciseTag[]
+  clothings          Clothing[]
+  wasteds            Wasted[]
+  favorites          Favorite[]
+  indulgences        Indulgence[]
+  indulgenceSettings IndulgenceSettings?
 }
 
 model VerificationToken {
@@ -205,8 +206,19 @@ model Indulgence {
   userId String
 
   title  String
-  points Decimal
+  points Float
   date   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model IndulgenceSettings {
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @id
+
+  resetsOnDay      Int
+  maxPointsPerWeek Float
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

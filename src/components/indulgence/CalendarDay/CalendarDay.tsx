@@ -22,7 +22,7 @@ const CalendarDay = ({ ...props }: Props) => {
     if (!foundIndulgences.length) return null
 
     return foundIndulgences.reduce((acc, indulgence) => {
-      return acc + Number(indulgence.points)
+      return acc + indulgence.points
     }, 0)
   }, [data, props.day])
 

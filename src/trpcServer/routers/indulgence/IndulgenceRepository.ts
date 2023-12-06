@@ -41,4 +41,42 @@ export class IndulgenceRepository {
 
     return Indulgence
   }
+
+  async fetchIndulgenceSettings(userId: string) {
+    const IndulgenceSettings = await this.db.indulgenceSettings.findUnique({
+      where: {
+        userId,
+      },
+    })
+
+    return IndulgenceSettings
+  }
+
+  async createIndulgenceSettings(userId: string) {
+    const IndulgenceSettings = await this.db.indulgenceSettings.create({
+      data: {
+        userId,
+        maxPointsPerWeek: 0,
+        resetsOnDay: 1,
+      },
+    })
+
+    return IndulgenceSettings
+  }
+
+  async updateIndulgenceSettings(
+    userId: string,
+    input: { maxPointsPerWeek: number; resetsOnDay: number }
+  ) {
+    const IndulgenceSettings = await this.db.indulgenceSettings.update({
+      where: {
+        userId,
+      },
+      data: {
+        ...input,
+      },
+    })
+
+    return IndulgenceSettings
+  }
 }

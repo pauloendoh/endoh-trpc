@@ -1,6 +1,6 @@
 import { Calendar } from "@mantine/dates"
 
-import { ActionIcon, Center, Container, Title } from "@mantine/core"
+import { ActionIcon, Box, Center, Container, Flex, Title } from "@mantine/core"
 import { MdAdd } from "react-icons/md"
 import { useIndulgencesQuery } from "../../hooks/trpc/indulgence/useIndulgencesQuery"
 import useDailyIndulgencesModalStore from "../../hooks/zustand/modals/useDailyIndulgencesModalStore"
@@ -8,9 +8,10 @@ import useIndulgenceModalStore from "../../hooks/zustand/modals/useIndulgenceMod
 import { buildIndulgenceInput } from "../../trpcServer/routers/indulgence/types/IndulgenceInput"
 import CenterLoader from "../_common/flexboxes/CenterLoader/CenterLoader"
 import FlexCol from "../_common/flexboxes/FlexCol"
-import FlexVCenter from "../_common/flexboxes/FlexVCenter"
 import LoggedLayout from "../_common/layout/LoggedLayout/LoggedLayout"
 import CalendarDay from "./CalendarDay/CalendarDay"
+import IndulgenceProgress from "./IndulgenceProgress/IndulgenceProgress"
+import IndulgenceSettingsInputs from "./IndulgenceSettingsInputs/IndulgenceSettingsInputs"
 
 type Props = {}
 
@@ -23,51 +24,62 @@ const IndulgencePage = ({ ...props }: Props) => {
   return (
     <LoggedLayout>
       <Container mt={40} mx="auto">
-        {isLoading && <CenterLoader />}
-        <Center>
-          <FlexCol gap={16}>
-            <Title order={4}>Indulgence</Title>
-            <Calendar
-              weekendDays={[]}
-              __onDayClick={(_, date) => {
-                openDailyIndulgences(date)
-                // const selectedDate = date.toISOString().split("T")[0]
-                // const foundIndulgence = myIndulgences?.find(
-                //   (indulgence) => indulgence.date.split("T")[0] === selectedDate
-                // )
-                // if (foundIndulgence) {
-                //   openModal(indulgenceOutputToInput(foundIndulgence))
-                //   return
-                // }
-                // openModal(
-                //   buildIndulgenceInput({
-                //     date: date.toISOString(),
-                //   })
-                // )
-              }}
-              renderDay={(day) => {
-                const isHighlighted = new Date().getDate() === day.getDate()
-                return <CalendarDay day={day} isHighlighted={isHighlighted} />
-              }}
-            />
+        {isLoading ? (
+          <CenterLoader />
+        ) : (
+          <Center>
+            <FlexCol gap={16}>
+              <Title order={4}>Indulgence</Title>
 
-            <FlexVCenter>
-              <ActionIcon
-                onClick={() => {
-                  openModal(
-                    buildIndulgenceInput({
-                      date: new Date().toISOString(),
-                    })
-                  )
+              <Calendar
+                weekendDays={[]}
+                __onDayClick={(_, date) => {
+                  openDailyIndulgences(date)
+                  // const selectedDate = date.toISOString().split("T")[0]
+                  // const foundIndulgence = myIndulgences?.find(
+                  //   (indulgence) => indulgence.date.split("T")[0] === selectedDate
+                  // )
+                  // if (foundIndulgence) {
+                  //   openModal(indulgenceOutputToInput(foundIndulgence))
+                  //   return
+                  // }
+                  // openModal(
+                  //   buildIndulgenceInput({
+                  //     date: date.toISOString(),
+                  //   })
+                  // )
                 }}
-                variant="filled"
-                color="primary"
-              >
-                <MdAdd />
-              </ActionIcon>
-            </FlexVCenter>
-          </FlexCol>
-        </Center>
+                renderDay={(day) => {
+                  const isHighlighted = new Date().getDate() === day.getDate()
+                  return <CalendarDay day={day} isHighlighted={isHighlighted} />
+                }}
+              />
+
+              <IndulgenceSettingsInputs />
+
+              <Flex>
+                <ActionIcon
+                  size="lg"
+                  onClick={() => {
+                    openModal(
+                      buildIndulgenceInput({
+                        date: new Date().toISOString(),
+                      })
+                    )
+                  }}
+                  variant="filled"
+                  color="primary"
+                >
+                  <MdAdd />
+                </ActionIcon>
+
+                <Box mx={8} />
+
+                <IndulgenceProgress />
+              </Flex>
+            </FlexCol>
+          </Center>
+        )}
       </Container>
     </LoggedLayout>
   )
