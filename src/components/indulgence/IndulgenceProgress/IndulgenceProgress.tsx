@@ -59,11 +59,20 @@ const IndulgenceProgress = ({ ...props }: Props) => {
     return ""
   }, [settings?.resetsOnDay])
 
+  const color = useMemo(() => {
+    if (percentage >= 100) return "red"
+    if (percentage >= 80) return "orange"
+    if (percentage >= 60) return "yellow"
+    if (percentage >= 40) return "lime"
+    if (percentage >= 20) return "green"
+    return "cyan"
+  }, [percentage])
+
   return (
     <FlexCol className="IndulgenceProgress">
       <Progress
         w="240px"
-        color="orange"
+        color={color}
         value={percentage}
         label={`${totalPoints} / ${settings?.maxPointsPerWeek}`}
         size="xl"
