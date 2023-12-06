@@ -19,6 +19,7 @@ const IndulgenceSettingsInputs = ({ ...props }: Props) => {
     if (!hasFirstLoaded && settings) {
       setHasFirstLoaded(true)
       setMaxPoints(settings.maxPointsPerWeek)
+      setResetDay(settings.resetsOnDay.toString())
     }
   }, [settings])
 
