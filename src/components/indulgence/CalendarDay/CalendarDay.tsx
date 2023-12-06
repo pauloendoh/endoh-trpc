@@ -21,9 +21,11 @@ const CalendarDay = ({ ...props }: Props) => {
 
     if (!foundIndulgences.length) return null
 
-    return foundIndulgences.reduce((acc, indulgence) => {
-      return acc + indulgence.points
-    }, 0)
+    return foundIndulgences
+      .reduce((acc, indulgence) => {
+        return acc + indulgence.points
+      }, 0)
+      .toFixed(1)
   }, [data, props.day])
 
   return (
