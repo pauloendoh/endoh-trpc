@@ -21,6 +21,7 @@ const IndulgenceProgress = ({ ...props }: Props) => {
       day.setDate(day.getDate() - i)
 
       if (day.getDay() === settings.resetsOnDay) {
+        day.setHours(0, 0, 0, 0)
         lastResetDay = day
         break
       }
@@ -45,10 +46,14 @@ const IndulgenceProgress = ({ ...props }: Props) => {
   const resetsInNDaysLabel = useMemo(() => {
     if (!settings) return ""
 
-    const today = new Date()
-    const resetsInNDays = settings.resetsOnDay - today.getDay()
+    debugger
+    const today = new Date().getDay()
+    const resetsInNDays =
+      today > settings.resetsOnDay
+        ? 7 - Math.abs(settings.resetsOnDay - today)
+        : Math.abs(settings.resetsOnDay - today)
 
-    if (resetsInNDays === 0) return "resets oday"
+    if (resetsInNDays === 0) return "resets today"
     if (resetsInNDays === 1) return "resets tomorrow"
     if (resetsInNDays === 2) return "resets in 2 days"
     if (resetsInNDays === 3) return "resets in 3 days"
@@ -74,7 +79,7 @@ const IndulgenceProgress = ({ ...props }: Props) => {
         w="240px"
         color={color}
         value={percentage}
-        label={`${totalPoints} / ${settings?.maxPointsPerWeek}`}
+        label={`${totalPoints.toFixed(1)} / ${settings?.maxPointsPerWeek}`}
         size="xl"
       />
       <Span size="sm">
