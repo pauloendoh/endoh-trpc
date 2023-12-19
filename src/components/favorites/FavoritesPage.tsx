@@ -57,7 +57,6 @@ const FavoritesPage = ({ ...props }: Props) => {
               onMouseDown={(e) => {
                 if (e.button === 1) {
                   handleIncreaseCount(favorite)
-                  debugger
                 }
               }}
             >

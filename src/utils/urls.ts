@@ -6,6 +6,7 @@ const urls = {
     wasted: "/wasted",
     favorites: "/favorites",
     indulgence: "/indulgence",
+    meetingNotes: "/meeting-notes",
   },
   api: {
     creations: "/api/creations",

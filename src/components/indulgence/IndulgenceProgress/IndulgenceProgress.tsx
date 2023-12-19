@@ -46,7 +46,6 @@ const IndulgenceProgress = ({ ...props }: Props) => {
   const resetsInNDaysLabel = useMemo(() => {
     if (!settings) return ""
 
-    debugger
     const today = new Date().getDay()
     const resetsInNDays =
       today > settings.resetsOnDay

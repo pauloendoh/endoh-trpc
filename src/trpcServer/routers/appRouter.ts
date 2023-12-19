@@ -6,6 +6,7 @@ import { FriendInterestRouter } from "./friend-interest/FriendInterestRouter"
 import { FriendsRouter } from "./friend/FriendRouter"
 import { indulgenceRouter } from "./indulgence/indulgenceRouter"
 import { InterestRouter } from "./interest/InterestRouter"
+import { meetingRouter } from "./meeting/meetingRouter"
 import { userRouter } from "./userRouter"
 import { wastedRouter } from "./wasted/wastedRouter"
 export const appRouter = router({
@@ -18,6 +19,7 @@ export const appRouter = router({
   wasted: wastedRouter,
   favorite: favoriteRouter,
   indulgence: indulgenceRouter,
+  meeting: meetingRouter,
 })
 // export type definition of API
 export type AppRouter = typeof appRouter

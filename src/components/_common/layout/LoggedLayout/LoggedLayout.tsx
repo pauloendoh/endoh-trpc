@@ -18,6 +18,10 @@ const links = [
   { href: urls.pages.wasted, label: "Wasted" },
   { href: urls.pages.indulgence, label: "Indulgence" },
   { href: urls.pages.playground, label: "Playground" },
+  {
+    href: urls.pages.meetingNotes,
+    label: "Meeting",
+  },
 ]
 
 const LoggedLayout = ({ ...props }: Props) => {
