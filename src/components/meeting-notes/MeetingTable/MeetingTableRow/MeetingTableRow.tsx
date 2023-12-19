@@ -29,7 +29,6 @@ const MeetingTableRow = ({ ...props }: Props) => {
   useEffect(() => {
     if (JSON.stringify(debouncedLocal) === JSON.stringify(props.item)) return
 
-    console.log({ debouncedLocal })
     mutate(meetingItemOutputToInput(debouncedLocal))
   }, [debouncedLocal])
 

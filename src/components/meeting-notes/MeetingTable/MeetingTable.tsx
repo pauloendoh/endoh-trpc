@@ -68,11 +68,7 @@ const MeetingTable = ({ ...props }: Props) => {
                   variant="subtle"
                   color="dark"
                   onClick={() => {
-                    mutate(
-                      buildMeetingItemInput({
-                        question: "New question",
-                      })
-                    )
+                    mutate(buildMeetingItemInput())
                   }}
                 >
                   + Add
