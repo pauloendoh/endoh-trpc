@@ -1,4 +1,5 @@
 import { Button, Paper, Table, useMantineTheme } from "@mantine/core"
+import { useMemo } from "react"
 import { useMeetingItemsQuery } from "../../../hooks/trpc/meeting/useMeetingItemsQuery"
 import { useSaveMeetingItemMutation } from "../../../hooks/trpc/meeting/useSaveMeetingItemMutation"
 import { buildMeetingItemInput } from "../../../trpcServer/routers/meeting/types/MeetingItemInput"
@@ -9,6 +10,18 @@ const MeetingTable = ({ ...props }: Props) => {
   const { mutate } = useSaveMeetingItemMutation()
 
   const { data: items } = useMeetingItemsQuery()
+
+  const sortedItems = useMemo(() => {
+    return (
+      items?.sort((a, b) => {
+        // position asc
+        if (a.position < b.position) return -1
+        if (a.position > b.position) return 1
+
+        return 0
+      }) || []
+    )
+  }, [])
 
   const theme = useMantineTheme()
 
@@ -57,7 +70,7 @@ const MeetingTable = ({ ...props }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {items?.map((item) => (
+            {sortedItems.map((item) => (
               <MeetingTableRow key={item.id} item={item} />
             ))}
           </tbody>
