@@ -21,7 +21,7 @@ const MeetingTable = ({ ...props }: Props) => {
         return 0
       }) || []
     )
-  }, [])
+  }, [items])
 
   const theme = useMantineTheme()
 
