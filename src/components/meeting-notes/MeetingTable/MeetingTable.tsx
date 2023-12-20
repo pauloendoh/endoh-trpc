@@ -14,12 +14,17 @@ const MeetingTable = ({ ...props }: Props) => {
   const sortedItems = useMemo(() => {
     return (
       items?.sort((a, b) => {
-        // position asc
-        if (a.position < b.position) return -1
-        if (a.position > b.position) return 1
+        // createdAt asc
+        if (a.createdAt < b.createdAt) {
+          return -1
+        }
+
+        if (a.createdAt > b.createdAt) {
+          return 1
+        }
 
         return 0
-      }) || []
+      }) ?? []
     )
   }, [items])
 
