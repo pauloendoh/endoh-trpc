@@ -31,31 +31,38 @@ const LoggedLayout = ({ ...props }: Props) => {
 
   return (
     <Box>
-      <Header height={60}>
-        <FlexVCenter px={24} h="100%" justify={"space-between"}>
-          {!isMobile && <Title order={4}>tRPC</Title>}
+      {!isMobile && (
+        <Header height={60}>
+          <FlexVCenter px={24} h="100%" justify={"space-between"}>
+            {!isMobile && <Title order={4}>tRPC</Title>}
 
-          <FlexVCenter gap={16}>
-            {links.map((link) => (
-              <MyNextLink className="relative" key={link.href} href={link.href}>
-                {path === link.href && (
-                  <motion.span
-                    layoutId="underline"
-                    className="absolute left-0 top-full block h-[1px] w-full bg-white"
-                  />
-                )}
+            <FlexVCenter gap={16}>
+              {links.map((link) => (
+                <MyNextLink
+                  className="relative"
+                  key={link.href}
+                  href={link.href}
+                >
+                  {path === link.href && (
+                    <motion.span
+                      layoutId="underline"
+                      className="absolute left-0 top-full block h-[1px] w-full bg-white"
+                    />
+                  )}
 
-                {link.label}
-              </MyNextLink>
-            ))}
+                  {link.label}
+                </MyNextLink>
+              ))}
+            </FlexVCenter>
+
+            <FlexVCenter gap={16}>
+              {/* <FlexVCenter>{user?.name}</FlexVCenter>isMobile */}
+              <Button onClick={() => signOut()}>Logout</Button>
+            </FlexVCenter>
           </FlexVCenter>
+        </Header>
+      )}
 
-          <FlexVCenter gap={16}>
-            {/* <FlexVCenter>{user?.name}</FlexVCenter>isMobile */}
-            <Button onClick={() => signOut()}>Logout</Button>
-          </FlexVCenter>
-        </FlexVCenter>
-      </Header>
       <motion.div
         initial={{
           opacity: 0,
