@@ -1,5 +1,6 @@
 import { Button, Container, Table } from "@mantine/core"
-import React from "react"
+import React, { useMemo } from "react"
+import { useAverageDailyWasteQuery } from "../../../hooks/trpc/wasted/useAverageDailyWasteQuery"
 import { useWastedsQuery } from "../../../hooks/trpc/wasted/useWastedsQuery"
 import useWastedModalStore from "../../../hooks/zustand/modals/useWastedModalStore"
 import { buildWastedInput } from "../../../trpcServer/routers/wasted/types/WastedInput"
@@ -7,6 +8,7 @@ import CenterLoader from "../../_common/flexboxes/CenterLoader/CenterLoader"
 import FlexCol from "../../_common/flexboxes/FlexCol"
 import FlexVCenter from "../../_common/flexboxes/FlexVCenter"
 import LoggedLayout from "../../_common/layout/LoggedLayout/LoggedLayout"
+import Span from "../../_common/text/Span"
 
 type Props = {}
 
@@ -35,6 +37,20 @@ const WastedPage = ({ ...props }: Props) => {
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
   }, [data])
 
+  const { data: averageDailyWaste } = useAverageDailyWasteQuery()
+
+  const totalToday = useMemo(() => {
+    return todayWasted.reduce((acc, wasted) => {
+      return acc + wasted.minutes
+    }, 0)
+  }, [todayWasted])
+
+  const isBelowAverage = useMemo(() => {
+    if (!averageDailyWaste) return true
+
+    return totalToday < averageDailyWaste
+  }, [averageDailyWaste, totalToday])
+
   return (
     <LoggedLayout>
       {isLoading && <CenterLoader height={400} />}
@@ -48,10 +64,16 @@ const WastedPage = ({ ...props }: Props) => {
           >
             <FlexCol gap={16}>
               <FlexVCenter>
-                {todayWasted.reduce((acc, wasted) => {
-                  return acc + wasted.minutes
-                }, 0)}{" "}
-                minutes today
+                <Span
+                  sx={{
+                    color: isBelowAverage ? "green" : "red",
+                  }}
+                >
+                  {totalToday} minutes today
+                </Span>
+                {averageDailyWaste && (
+                  <Span>&nbsp;|&nbsp;{averageDailyWaste} avg</Span>
+                )}
               </FlexVCenter>
               <Table
                 withColumnBorders

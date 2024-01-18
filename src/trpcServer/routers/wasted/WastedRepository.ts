@@ -41,4 +41,23 @@ export class WastedRepository {
 
     return wasted
   }
+
+  async getAverageDailyWaste(userId: string) {
+    const data = await this.db.$queryRaw<
+      {
+        average: number
+      }[]
+    >`SELECT  cast(ceil(avg("total")) as integer)	as average
+      FROM (
+          SELECT to_char(w."createdAt", 'YYYY-MM-DD'),
+                 sum(minutes)  AS total
+            FROM "Wasted" w 
+           WHERE "userId" = ${userId}
+        GROUP BY to_char("createdAt", 'YYYY-MM-DD')
+      )AS RESULT 
+    `
+
+    const average = data[0].average
+    return average
+  }
 }
