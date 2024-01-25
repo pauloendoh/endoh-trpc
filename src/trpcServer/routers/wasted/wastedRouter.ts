@@ -22,4 +22,9 @@ export const wastedRouter = router({
     const data = await service.getAverageDailyWaste(ctx.session.user.id)
     return data
   }),
+
+  extraWastedLast30Days: protectedProcedure.query(async ({ ctx }) => {
+    const data = await service.getExtraWastedLast30Days(ctx.session.user.id)
+    return data
+  }),
 })

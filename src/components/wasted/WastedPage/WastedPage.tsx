@@ -1,6 +1,8 @@
 import { Button, Container, Table } from "@mantine/core"
 import React, { useMemo } from "react"
+import { MdInfo } from "react-icons/md"
 import { useAverageDailyWasteQuery } from "../../../hooks/trpc/wasted/useAverageDailyWasteQuery"
+import { useExtraWastedLast30DaysQuery } from "../../../hooks/trpc/wasted/useExtraWastedLast30DaysQuery"
 import { useWastedsQuery } from "../../../hooks/trpc/wasted/useWastedsQuery"
 import useWastedModalStore from "../../../hooks/zustand/modals/useWastedModalStore"
 import { buildWastedInput } from "../../../trpcServer/routers/wasted/types/WastedInput"
@@ -51,6 +53,8 @@ const WastedPage = ({ ...props }: Props) => {
     return totalToday < averageDailyWaste
   }, [averageDailyWaste, totalToday])
 
+  const { data: extraWastedLast30Days } = useExtraWastedLast30DaysQuery()
+
   return (
     <LoggedLayout>
       {isLoading && <CenterLoader height={400} />}
@@ -63,16 +67,33 @@ const WastedPage = ({ ...props }: Props) => {
             }}
           >
             <FlexCol gap={16}>
-              <FlexVCenter>
-                <Span
-                  sx={{
-                    color: isBelowAverage ? "green" : "red",
-                  }}
-                >
-                  {totalToday} minutes today
-                </Span>
-                {averageDailyWaste && (
-                  <Span>&nbsp;|&nbsp;{averageDailyWaste} avg</Span>
+              <FlexVCenter justify={"space-between"}>
+                <FlexVCenter>
+                  <Span
+                    sx={{
+                      color: isBelowAverage ? "green" : "red",
+                    }}
+                  >
+                    {totalToday} minutes today
+                  </Span>
+                  {averageDailyWaste && (
+                    <Span>&nbsp;|&nbsp;{averageDailyWaste} avg</Span>
+                  )}
+                </FlexVCenter>
+
+                {!!extraWastedLast30Days && (
+                  <Button
+                    variant="subtle"
+                    color="red"
+                    rightIcon={<MdInfo />}
+                    onClick={() => {
+                      alert(
+                        `You have passed ${extraWastedLast30Days} minutes in the last 30 days.`
+                      )
+                    }}
+                  >
+                    R$ {(extraWastedLast30Days / 10).toFixed(2)}
+                  </Button>
                 )}
               </FlexVCenter>
               <Table

@@ -15,6 +15,10 @@ export const useSaveWastedMutation = () => {
         pushOrReplace(curr, saved, "id")
       )
 
+      queryClient.refetchQueries(
+        getQueryKey(trpc.wasted.extraWastedLast30Days, undefined, "query")
+      )
+
       myNotifications.success("Wasted saved")
     },
   })
