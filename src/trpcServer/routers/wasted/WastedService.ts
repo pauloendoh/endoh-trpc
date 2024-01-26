@@ -21,10 +21,7 @@ export class WastedService {
   }
 
   async getExtraWastedLast30Days(userId: string) {
-    const [wasteds, averageWastePerDay] = await Promise.all([
-      this.findWastedsByUserId(userId),
-      this.wastedRepo.getAverageDailyWaste(userId),
-    ])
+    const wasteds = await this.findWastedsByUserId(userId)
 
     const dateAt30DaysAgo = new Date()
     dateAt30DaysAgo.setDate(new Date().getDate() - 30)
@@ -47,7 +44,7 @@ export class WastedService {
     let extraWastedLast30Days = 0
 
     Object.entries(groupedByDay).forEach(([day, totalWastedAtDay]) => {
-      const extraWasted = totalWastedAtDay - averageWastePerDay
+      const extraWasted = totalWastedAtDay
 
       if (extraWasted > 0) {
         extraWastedLast30Days += extraWasted
