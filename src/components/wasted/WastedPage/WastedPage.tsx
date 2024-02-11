@@ -67,6 +67,13 @@ const WastedPage = ({ ...props }: Props) => {
             }}
           >
             <FlexCol gap={16}>
+              <Span align="center">
+                <i>
+                  <b>Reflita sobre os seus problemas na hora certa.</b> Foque em
+                  seus grandes objetivos.
+                </i>
+              </Span>
+
               <FlexVCenter justify={"space-between"}>
                 <FlexVCenter>
                   <Span
