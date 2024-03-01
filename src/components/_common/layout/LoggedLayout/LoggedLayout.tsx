@@ -22,6 +22,10 @@ const links = [
     href: urls.pages.meetingNotes,
     label: "Meeting",
   },
+  {
+    href: urls.pages.diary,
+    label: "Diary",
+  },
 ]
 
 const LoggedLayout = ({ ...props }: Props) => {

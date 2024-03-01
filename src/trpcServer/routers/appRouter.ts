@@ -1,5 +1,6 @@
 import { router } from "../trpcServer"
 import { ClothingRouter } from "./clothing/ClothingRouter"
+import { diaryRouter } from "./diary/diaryRouter"
 import { ExerciseRouter } from "./exercise/ExerciseRouter"
 import { favoriteRouter } from "./favorite/favoriteRouter"
 import { FriendInterestRouter } from "./friend-interest/FriendInterestRouter"
@@ -20,6 +21,7 @@ export const appRouter = router({
   favorite: favoriteRouter,
   indulgence: indulgenceRouter,
   meeting: meetingRouter,
+  diary: diaryRouter,
 })
 // export type definition of API
 export type AppRouter = typeof appRouter

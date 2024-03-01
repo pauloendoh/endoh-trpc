@@ -7,6 +7,7 @@ const urls = {
     favorites: "/favorites",
     indulgence: "/indulgence",
     meetingNotes: "/meeting-notes",
+    diary: "/diary",
   },
   api: {
     creations: "/api/creations",

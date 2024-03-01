@@ -40,25 +40,29 @@ model Session {
 }
 
 model User {
-  id                 String              @id @default(cuid())
-  name               String?
-  username           String?
-  email              String?             @unique
-  emailVerified      DateTime?
-  image              String?
-  accounts           Account[]
-  sessions           Session[]
-  Creation           Creation[]
-  exercises          Exercise[]
-  friends            Friend[]
-  interests          Interest[]
-  exerciseTags       ExerciseTag[]
-  clothings          Clothing[]
-  wasteds            Wasted[]
-  favorites          Favorite[]
-  indulgences        Indulgence[]
-  indulgenceSettings IndulgenceSettings?
-  meetingItems       MeetingItem[]
+  id                    String                @id @default(cuid())
+  name                  String?
+  username              String?
+  email                 String?               @unique
+  emailVerified         DateTime?
+  image                 String?
+  accounts              Account[]
+  sessions              Session[]
+  Creation              Creation[]
+  exercises             Exercise[]
+  friends               Friend[]
+  interests             Interest[]
+  exerciseTags          ExerciseTag[]
+  clothings             Clothing[]
+  wasteds               Wasted[]
+  favorites             Favorite[]
+  indulgences           Indulgence[]
+  indulgenceSettings    IndulgenceSettings?
+  meetingItems          MeetingItem[]
+  diaryEntries          DiaryEntry[]
+  recurrentDiaryEntries RecurrentDiaryEntry[]
+  diaryDayConfigs       DiaryDayConfig[]
+  diaryGlobalConfig     DiaryGlobalConfig?
 }
 
 model VerificationToken {
@@ -234,6 +238,62 @@ model MeetingItem {
   answer   String
   isOk     Boolean
   position Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DiaryEntry {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  description String
+
+  points Float
+
+  datetime        DateTime
+  isFromYesterday Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RecurrentDiaryEntry {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  description String
+  points      Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DiaryDayConfig {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  pointsPerHour  Float
+  availableHours Float
+  goalHour       Int   @default(21)
+
+  date DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DiaryGlobalConfig {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+
+  pointsPerHour  Float
+  availableHours Float
+  goalHour       Int   @default(21)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

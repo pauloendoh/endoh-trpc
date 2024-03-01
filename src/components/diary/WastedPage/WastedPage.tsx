@@ -16,7 +16,7 @@ type Props = {}
 
 const WastedPage = ({ ...props }: Props) => {
   const { openDialog } = useWastedModalStore()
-  const { data: data, isLoading } = useWastedsQuery()
+  const { data, isLoading } = useWastedsQuery()
 
   const todayWasted = React.useMemo(() => {
     if (!data) return []
