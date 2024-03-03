@@ -105,6 +105,8 @@ const RecurrentEntryModal = () => {
           </Box>
           <Box mt={16}>
             <SaveCancelButtons
+              saveWidth={200}
+              saveText="Save recurrent entry"
               isLoading={isLoading}
               disabled={isLoading}
               onCancel={handleClose}
