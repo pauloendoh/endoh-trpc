@@ -1,5 +1,6 @@
 import ClothingModal from "./ClothingModal/ClothingModal"
 import DailyIndulgencesModal from "./DailyIndulgencesModal/DailyIndulgencesModal"
+import DiaryConfigModal from "./DiaryConfigModal/DiaryConfigModal"
 import DiaryEntryModal from "./DiaryEntryModal/DiaryEntryModal"
 import ExerciseModal from "./ExerciseModal/ExerciseModal"
 import ExerciseTagModal from "./ExerciseTagModal/ExerciseTagModal"
@@ -26,6 +27,7 @@ const GlobalModals = (props: Props) => {
       <IndulgenceModal />
       <DiaryEntryModal />
       <RecurrentEntryModal />
+      <DiaryConfigModal />
     </>
   )
 }

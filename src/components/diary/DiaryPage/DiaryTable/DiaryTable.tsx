@@ -1,9 +1,11 @@
-import { Button, Paper, Table, Title } from "@mantine/core"
+import { ActionIcon, Button, Paper, Table, Title } from "@mantine/core"
 import { useMemo } from "react"
+import { MdSettings } from "react-icons/md"
 import { useDayConfigQuery } from "../../../../hooks/trpc/diary/useDayConfigQuery"
 import { useTodayPointsQueryUtils } from "../../../../hooks/trpc/diary/utils/useTodayPointsQueryUtils"
 import { useMyMediaQuery } from "../../../../hooks/useMyMediaQuery"
 import useDiaryStore from "../../../../hooks/zustand/domains/diary/useDiaryStore"
+import useDiaryConfigModalStore from "../../../../hooks/zustand/modals/useDiaryConfigModalStore"
 import useEntryModalStore from "../../../../hooks/zustand/modals/useEntryModalStore"
 import { buildDiaryEntryInput } from "../../../../trpcServer/routers/diary/types/DiaryEntryInput"
 import FlexVCenter from "../../../_common/flexboxes/FlexVCenter"
@@ -34,15 +36,14 @@ const DiaryTable = ({ ...props }: Props) => {
     const currentHour = new Date().getHours()
     const remainingHours = dayConfig.goalHour - currentHour
 
-    console.log({
-      remainingHours,
-    })
     if (remainingHours <= 0) {
       return 0
     }
 
     return remainingPoints / remainingHours
   }, [dayConfig, todayPoints])
+
+  const { openModal: openDiaryConfigModal } = useDiaryConfigModalStore()
 
   return (
     <Paper>
@@ -56,11 +57,18 @@ const DiaryTable = ({ ...props }: Props) => {
           Today: {todayPoints}
         </Title>
 
-        <Title>Average for goal: {averagePerHourGoal.toFixed(1)}/h </Title>
-
-        <Title>
-          Goal: {todayGoal} | {dayConfig?.goalHour}h
+        <Title size="lg">
+          Average for goal: {averagePerHourGoal.toFixed(1)}/h{" "}
         </Title>
+
+        <FlexVCenter gap={2}>
+          <Title size="lg">
+            Goal: {todayGoal} | {dayConfig?.goalHour}h
+          </Title>
+          <ActionIcon onClick={openDiaryConfigModal} size="lg">
+            <MdSettings />
+          </ActionIcon>
+        </FlexVCenter>
       </FlexVCenter>
       <Table
         mt={24}

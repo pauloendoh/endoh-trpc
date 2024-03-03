@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { useDiaryEntriesQuery } from "../../../../../hooks/trpc/diary/useDiaryEntriesQuery"
 
 const useFilteredEntries = (selectedDate: string | null) => {
-  const { data } = useDiaryEntriesQuery()
+  const { data: data } = useDiaryEntriesQuery()
 
   const filteredLearnings = useMemo(
     () =>
