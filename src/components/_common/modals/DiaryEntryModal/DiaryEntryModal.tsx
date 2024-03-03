@@ -94,7 +94,7 @@ const DiaryEntryModal = () => {
                     value={watch("points")}
                     precision={2}
                     label="Points"
-                    w={80}
+                    w={100}
                     min={0}
                     max={undefined}
                   />
