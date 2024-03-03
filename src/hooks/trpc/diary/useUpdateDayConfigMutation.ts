@@ -1,20 +1,13 @@
-import { useQueryClient } from "@tanstack/react-query"
-import { getQueryKey } from "@trpc/react-query"
 import { myNotifications } from "../../../utils/mantine/myNotifications"
 import { trpc } from "../../../utils/trpc/trpc"
+import { useDayConfigQuery } from "./useDayConfigQuery"
 
 export const useUpdateDayConfigMutation = () => {
-  const queryClient = useQueryClient()
+  const { refetch } = useDayConfigQuery()
 
   return trpc.diary.updateDayConfig.useMutation({
     onSuccess: async (saved, input) => {
-      const queryKey = getQueryKey(
-        trpc.diary.getOrCreateDayConfig,
-        undefined,
-        "query"
-      )
-
-      queryClient.setQueryData(queryKey, saved)
+      refetch()
 
       myNotifications.success("Config saved!")
     },
