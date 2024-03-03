@@ -8,7 +8,7 @@ import { DiaryEntryInput } from "../../../../trpcServer/routers/diary/types/Diar
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
 import FlexVCenter from "../../flexboxes/FlexVCenter"
 import MyNumberInputV2 from "../../inputs/MyNumberInputV2"
-import LearningDescriptionAutocomplete from "./LearningDescriptionAutocomplete/LearningDescriptionAutocomplete"
+import RecurrentEntryAutocomplete from "./RecurrentEntryAutocomplete/RecurrentEntryAutocomplete"
 
 const ariaLabel = "diary-entry-modal"
 
@@ -72,7 +72,7 @@ const DiaryEntryModal = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box>
             <FlexVCenter gap={16}>
-              <LearningDescriptionAutocomplete
+              <RecurrentEntryAutocomplete
                 onChangeStringValue={(value) => {
                   setValue("description", value)
                 }}

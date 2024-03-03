@@ -3,6 +3,7 @@ import { useMemo } from "react"
 import { useRecurrentEntriesQuery } from "../../../../../hooks/trpc/diary/useRecurrentEntriesQuery"
 import useRecurrentEntryModalStore from "../../../../../hooks/zustand/modals/useRecurrentEntryModalStore"
 import { buildRecurrentEntryInput } from "../../../../../trpcServer/routers/diary/types/RecurrentEntryInput"
+import FlexVCenter from "../../../flexboxes/FlexVCenter"
 
 type Props = {
   stringValue: string
@@ -11,7 +12,7 @@ type Props = {
   inputRef: React.Ref<HTMLInputElement>
 }
 
-const LearningDescriptionAutocomplete = ({ ...props }: Props) => {
+const RecurrentEntryAutocomplete = ({ ...props }: Props) => {
   const { openModal } = useRecurrentEntryModalStore()
 
   const { data: recurrentEntries } = useRecurrentEntriesQuery()
@@ -63,11 +64,42 @@ const LearningDescriptionAutocomplete = ({ ...props }: Props) => {
     return options
   }, [recurrentEntries, props.stringValue])
 
+  const selectedRecurrentEntry = useMemo(() => {
+    return recurrentEntries?.find(
+      (entry) => entry.description === props.stringValue
+    )
+  }, [recurrentEntries, props.stringValue])
+
   return (
     <Autocomplete
       w="100%"
       withinPortal
-      label="Description"
+      label={
+        <FlexVCenter>
+          <span>Description</span>
+          {selectedRecurrentEntry && (
+            <button
+              type="button"
+              style={{
+                cursor: "pointer",
+                textDecoration: "underline",
+                background: "none",
+                border: "none",
+              }}
+              onClick={() => {
+                openModal(selectedRecurrentEntry, {
+                  onSuccess: (saved) => {
+                    props.onChangeStringValue(saved.description)
+                    props.onChangePoints(saved.points)
+                  },
+                })
+              }}
+            >
+              (edit recurrent entry)
+            </button>
+          )}
+        </FlexVCenter>
+      }
       value={props.stringValue}
       data={mappedData}
       filter={(value, item) => {
@@ -103,6 +135,8 @@ const LearningDescriptionAutocomplete = ({ ...props }: Props) => {
         handleChange(stringValue)
       }}
       ref={props.inputRef}
+      zIndex={9999}
+      onItemSubmit={(item) => {}}
 
       // renderInput={(params) => (
       //   <MyTextField
@@ -153,4 +187,4 @@ const LearningDescriptionAutocomplete = ({ ...props }: Props) => {
   )
 }
 
-export default LearningDescriptionAutocomplete
+export default RecurrentEntryAutocomplete

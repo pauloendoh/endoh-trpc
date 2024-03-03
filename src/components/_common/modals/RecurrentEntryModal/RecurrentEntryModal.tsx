@@ -62,6 +62,7 @@ const RecurrentEntryModal = () => {
 
   return (
     <Modal
+      zIndex={9999}
       onClose={handleClose}
       opened={isOpen}
       size="xs"
