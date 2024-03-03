@@ -10,7 +10,9 @@ export const useTodayPointsQueryUtils = () => {
   const filteredEntries = useFilteredEntries(selectedDate)
 
   const todayPoints = useMemo(() => {
-    return filteredEntries.reduce((acc, entry) => acc + entry.points, 0)
+    return Number(
+      filteredEntries.reduce((acc, entry) => acc + entry.points, 0).toFixed(2)
+    )
   }, [filteredEntries])
 
   const todayGoal = useMemo(() => {
