@@ -65,6 +65,7 @@ const LearningDescriptionAutocomplete = ({ ...props }: Props) => {
 
   return (
     <Autocomplete
+      w="100%"
       withinPortal
       label="Description"
       value={props.stringValue}
