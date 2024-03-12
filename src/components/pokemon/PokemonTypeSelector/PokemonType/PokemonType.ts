@@ -27,80 +27,88 @@ export const pokemonTypeMapping: Record<
     name: string
     color: string
     strongAgainst: PokemonType[]
-    weakAgainst: PokemonType[]
+    lowDamageAgainst: PokemonType[]
   }
 > = {
   normal: {
     name: "Normal",
     color: "gray",
     strongAgainst: [],
-    weakAgainst: ["fighting"],
+    lowDamageAgainst: ["rock", "steel"],
   },
   fighting: {
     name: "Fighting",
     color: "red",
     strongAgainst: ["normal", "rock", "steel", "ice", "dark"],
-    weakAgainst: ["flying", "psychic", "fairy"],
+    lowDamageAgainst: ["flying", "poison", "bug", "psychic", "fairy"],
   },
   flying: {
     name: "Flying",
     color: "blue",
     strongAgainst: ["fighting", "bug", "grass"],
-    weakAgainst: ["rock", "electric", "ice"],
+    lowDamageAgainst: ["rock", "steel", "electric"],
   },
   poison: {
     name: "Poison",
     color: "purple",
     strongAgainst: ["grass", "fairy"],
-    weakAgainst: ["ground", "psychic"],
+    lowDamageAgainst: ["poison", "ground", "rock", "ghost"],
   },
   ground: {
     name: "Ground",
     color: "brown",
     strongAgainst: ["poison", "rock", "steel", "fire", "electric"],
-    weakAgainst: ["water", "grass", "ice"],
+    lowDamageAgainst: ["bug", "grass"],
   },
   rock: {
     name: "Rock",
     color: "orange",
     strongAgainst: ["flying", "bug", "fire", "ice"],
-    weakAgainst: ["fighting", "ground", "steel", "water", "grass"],
+    lowDamageAgainst: ["fighting", "ground", "steel"],
   },
   bug: {
     name: "Bug",
     color: "green",
     strongAgainst: ["grass", "psychic", "dark"],
-    weakAgainst: ["flying", "rock", "fire"],
+    lowDamageAgainst: [
+      "fighting",
+      "flying",
+      "poison",
+      "ghost",
+      "steel",
+      "fire",
+      "fairy",
+    ],
   },
   ghost: {
     name: "Ghost",
-    color: "indigo",
+    color: "black",
     strongAgainst: ["ghost", "psychic"],
-    weakAgainst: ["dark"],
+    lowDamageAgainst: ["dark"],
   },
   steel: {
     name: "Steel",
     color: "gray",
     strongAgainst: ["rock", "ice", "fairy"],
-    weakAgainst: ["fighting", "ground", "fire"],
+    lowDamageAgainst: ["steel", "fire", "water", "electric"],
   },
   fire: {
     name: "Fire",
     color: "red",
     strongAgainst: ["bug", "steel", "grass", "ice"],
-    weakAgainst: ["ground", "rock", "water"],
+    lowDamageAgainst: ["rock", "fire", "water", "dragon"],
   },
   water: {
     name: "Water",
     color: "blue",
     strongAgainst: ["ground", "rock", "fire"],
-    weakAgainst: ["grass", "electric"],
+    lowDamageAgainst: ["water", "grass", "dragon"],
   },
   grass: {
     name: "Grass",
     color: "green",
     strongAgainst: ["ground", "rock", "water"],
-    weakAgainst: [
+    lowDamageAgainst: [
       "flying",
       "poison",
       "bug",
@@ -114,36 +122,36 @@ export const pokemonTypeMapping: Record<
     name: "Electric",
     color: "yellow",
     strongAgainst: ["flying", "water"],
-    weakAgainst: ["ground"],
+    lowDamageAgainst: ["grass", "electric", "dragon"],
   },
   psychic: {
     name: "Psychic",
-    color: "pink",
+    color: "purple",
     strongAgainst: ["fighting", "poison"],
-    weakAgainst: ["bug", "ghost", "dark"],
+    lowDamageAgainst: ["steel", "psychic"],
   },
   ice: {
     name: "Ice",
     color: "cyan",
     strongAgainst: ["flying", "ground", "grass", "dragon"],
-    weakAgainst: ["fighting", "rock", "steel", "fire"],
+    lowDamageAgainst: ["steel", "fire", "water", "ice"],
   },
   dragon: {
     name: "Dragon",
     color: "purple",
     strongAgainst: ["dragon"],
-    weakAgainst: ["ice", "dragon", "fairy"],
+    lowDamageAgainst: ["steel", "fairy"],
   },
   dark: {
     name: "Dark",
-    color: "black",
+    color: "gray",
     strongAgainst: ["ghost", "psychic"],
-    weakAgainst: ["fighting", "bug", "fairy"],
+    lowDamageAgainst: ["fighting", "dark", "fairy"],
   },
   fairy: {
     name: "Fairy",
     color: "pink",
     strongAgainst: ["fighting", "dragon", "dark"],
-    weakAgainst: ["poison", "steel"],
+    lowDamageAgainst: ["poison", "steel", "fire"],
   },
 }
