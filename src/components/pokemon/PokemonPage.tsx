@@ -39,6 +39,16 @@ const PokemonPage = ({ ...props }: Props) => {
 
   const [showLowDamageAgainst, setShowLowDamageAgainst] = useState(false)
 
+  const weakTo = useMemo(() => {
+    return selected.reduce<PokemonType[]>((acc, type) => {
+      return [...acc, ...pokemonTypeMapping[type].weakTo]
+    }, [])
+  }, [selected])
+
+  const uniqueWeakTo = useMemo(() => Array.from(new Set(weakTo)), [weakTo])
+
+  const [showWeakTo, setShowWeakTo] = useState(false)
+
   return (
     <LoggedLayout>
       <Container mt={20}>
@@ -83,7 +93,7 @@ const PokemonPage = ({ ...props }: Props) => {
             <FlexCol gap={8}>
               <Title order={6}>
                 <FlexVCenter>
-                  <span>Low damage against</span>
+                  <span>Low damage against</span>&nbsp;
                   {uniqueLowDamageAgainst.length > 0 && (
                     <span> ({uniqueLowDamageAgainst.length})</span>
                   )}
@@ -100,6 +110,21 @@ const PokemonPage = ({ ...props }: Props) => {
               {showLowDamageAgainst && (
                 <PokemonTypeSelector selected={lowDamageAgainst} />
               )}
+            </FlexCol>
+
+            <FlexCol gap={8}>
+              <Title order={6}>
+                <FlexVCenter>
+                  <span>Weak to</span>&nbsp;
+                  {uniqueWeakTo.length > 0 && (
+                    <span> ({uniqueWeakTo.length})</span>
+                  )}
+                  <ActionIcon onClick={() => setShowWeakTo(!showWeakTo)}>
+                    {showWeakTo ? <FaEye /> : <FaEyeSlash />}
+                  </ActionIcon>
+                </FlexVCenter>
+              </Title>
+              {showWeakTo && <PokemonTypeSelector selected={weakTo} />}
             </FlexCol>
           </FlexCol>
         </Flex>
