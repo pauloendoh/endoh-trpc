@@ -63,6 +63,7 @@ model User {
   recurrentDiaryEntries RecurrentDiaryEntry[]
   diaryDayConfigs       DiaryDayConfig[]
   diaryGlobalConfig     DiaryGlobalConfig?
+  ideas                 Idea[]
 }
 
 model VerificationToken {
@@ -294,6 +295,28 @@ model DiaryGlobalConfig {
   pointsPerHour  Float
   availableHours Float
   goalHour       Int   @default(21)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum IdeaStatus {
+  WOULD_NOW
+  WOULD_LATER
+  COMPLETED
+  ARCHIVED
+}
+
+model Idea {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  title       String
+  description String
+
+  status     IdeaStatus @default(WOULD_NOW)
+  complexity Float
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
