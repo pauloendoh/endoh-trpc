@@ -32,6 +32,16 @@ export const diaryRouter = router({
       return data
     }),
 
+  deleteRecurrentEntry: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const data = await service.deleteRecurrentEntry(
+        ctx.session.user.id,
+        input
+      )
+      return data
+    }),
+
   getOrCreateDayConfig: protectedProcedure
     .input(
       z.object({

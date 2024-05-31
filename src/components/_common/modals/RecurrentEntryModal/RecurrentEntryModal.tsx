@@ -1,6 +1,8 @@
-import { Box, Modal } from "@mantine/core"
+import { ActionIcon, Box, Menu, Modal, useMantineTheme } from "@mantine/core"
 import { useEffect, useMemo } from "react"
 import { Controller, useForm } from "react-hook-form"
+import { MdClose, MdDelete, MdMoreHoriz } from "react-icons/md"
+import { useDeleteRecurrentEntryMutation } from "../../../../hooks/trpc/diary/useDeleteRecurrentEntryMutation"
 import { useSaveRecurrentEntryMutation } from "../../../../hooks/trpc/diary/useSaveRecurrentEntryMutation"
 import useRecurrentEntryModalStore from "../../../../hooks/zustand/modals/useRecurrentEntryModalStore"
 import {
@@ -60,13 +62,65 @@ const RecurrentEntryModal = () => {
     })
   }
 
+  const { mutate: submitDelete } = useDeleteRecurrentEntryMutation()
+  const theme = useMantineTheme()
+
   return (
     <Modal
       zIndex={9999}
       onClose={handleClose}
       opened={isOpen}
       size="xs"
-      title={initialValue?.id ? "Edit recurrent entry" : "Add recurrent entry"}
+      styles={{
+        title: {
+          width: "100%",
+        },
+      }}
+      title={
+        initialValue?.id ? (
+          <FlexVCenter justify={"space-between"}>
+            <span>Edit recurrent entry</span>
+            <Menu shadow="md" position="bottom-end">
+              <Menu.Target>
+                <ActionIcon>
+                  <MdMoreHoriz />
+                </ActionIcon>
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Menu.Item onClick={() => handleClose()} icon={<MdClose />}>
+                  Close
+                </Menu.Item>
+                <Menu.Item
+                  sx={{
+                    color: theme.colors.red[6],
+                  }}
+                  icon={<MdDelete />}
+                  onClick={() => {
+                    if (!initialValue.id) return
+                    if (
+                      confirm(
+                        "Are you sure you want to delete this recurrent entry?"
+                      )
+                    ) {
+                      submitDelete(initialValue.id, {
+                        onSuccess: () => {
+                          handleClose()
+                        },
+                      })
+                    }
+                  }}
+                >
+                  Delete
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </FlexVCenter>
+        ) : (
+          "Add recurrent entry"
+        )
+      }
+      withCloseButton={false}
     >
       <Box pb={1}>
         <form onSubmit={handleSubmit(onSubmit)}>

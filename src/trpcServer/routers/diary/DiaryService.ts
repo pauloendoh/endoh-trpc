@@ -67,6 +67,15 @@ export class DiaryService {
     return this.diaryRepo.createRecurrentEntry(userId, input)
   }
 
+  async deleteRecurrentEntry(userId: string, id: string) {
+    const userOwns = await this.diaryRepo.userOwnsRecurrentEntry(userId, id)
+    if (!userOwns) {
+      throw new Error("User does not own this entry")
+    }
+
+    return this.diaryRepo.deleteRecurrentEntry(id)
+  }
+
   async getOrCreateDayConfig(userId: string, date: string) {
     date = date.split("T")[0]
 

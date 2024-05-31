@@ -91,6 +91,14 @@ export class DiaryRepository {
     })
   }
 
+  async deleteRecurrentEntry(id: string) {
+    return this.db.recurrentDiaryEntry.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async getDayConfig(userId: string, date: Date) {
     return this.db.diaryDayConfig.findFirst({
       where: {
