@@ -3,6 +3,7 @@ import { useMemo } from "react"
 import { useRecurrentEntriesQuery } from "../../../../../hooks/trpc/diary/useRecurrentEntriesQuery"
 import useRecurrentEntryModalStore from "../../../../../hooks/zustand/modals/useRecurrentEntryModalStore"
 import { buildRecurrentEntryInput } from "../../../../../trpcServer/routers/diary/types/RecurrentEntryInput"
+import textContainsWords from "../../../../../utils/text/textContainsWords"
 import FlexVCenter from "../../../flexboxes/FlexVCenter"
 
 type Props = {
@@ -111,78 +112,14 @@ const RecurrentEntryAutocomplete = ({ ...props }: Props) => {
           return false
         }
 
-        return item.label.toLowerCase().includes(value.trim().toLowerCase())
+        return textContainsWords(item.label, value)
       }}
-      // clearOnBlur={false}
-      // value={props.stringValue}
-
-      // isOptionEqualToValue={(option, value) => {
-      //   if (typeof value === "string") {
-      //     return option === value
-      //   }
-
-      //   return option?.id === value?.id
-      // }}
-      // sx={{ width: 300 }}
-      // getOptionLabel={(option) => {
-      //   if (typeof option === "string") {
-      //     return option
-      //   }
-      //   return option.description
-      // }}
-      // size="small"
       onChange={(stringValue) => {
         handleChange(stringValue)
       }}
       ref={props.inputRef}
       zIndex={9999}
       onItemSubmit={(item) => {}}
-
-      // renderInput={(params) => (
-      //   <MyTextField
-      //     label="Description"
-      //     sx={{ mt: 1 }}
-      //     inputRef={props.inputRef}
-      //     {...params}
-      //     value={props.stringValue}
-      //     onChange={(e) => {
-      //       props.onChangeStringValue(e.target.value)
-      //     }}
-      //   />
-      // )}
-      // renderOption={(liProps, option) => {
-      //   if (option.id === 0) {
-      //     return (
-      //       <li
-      //         {...liProps}
-      //         style={{
-      //           display: "flex",
-      //           alignItems: "center",
-      //           justifyContent: "center",
-      //           fontStyle: "italic",
-      //         }}
-      //         key={option.id}
-      //       >
-      //         + Add recurrent learning
-      //       </li>
-      //     )
-      //   }
-
-      //   return (
-      //     <li
-      //       {...liProps}
-      //       style={{ display: "flex", alignItems: "center" }}
-      //       key={option.id}
-      //     >
-      //       <FlexVCenter>
-      //         <FlexCol>
-      //           <Span>{option.description}</Span>
-      //           <Span fontSize={10}>{upToNDecimals(option.points)} pts</Span>
-      //         </FlexCol>
-      //       </FlexVCenter>
-      //     </li>
-      //   )
-      // }}
     />
   )
 }
