@@ -10,6 +10,7 @@ import IdeaModal from "./IdeaModal/IdeaModal"
 import IndulgenceModal from "./IndulgenceModal/IndulgenceModal"
 import InterestModal from "./InterestModal/InterestModal"
 import RecurrentEntryModal from "./RecurrentEntryModal/RecurrentEntryModal"
+import RecurrentModal from "./RecurrentModal/RecurrentModal"
 import WastedModal from "./WastedModal/WastedModal"
 
 type Props = {}
@@ -29,8 +30,8 @@ const GlobalModals = (props: Props) => {
       <DiaryEntryModal />
       <RecurrentEntryModal />
       <DiaryConfigModal />
-
       <IdeaModal />
+      <RecurrentModal />
     </>
   )
 }

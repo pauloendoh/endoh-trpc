@@ -8,6 +8,7 @@ const urls = {
     indulgence: "/indulgence",
     meetingNotes: "/meeting-notes",
     diary: "/diary",
+    recurrent: "/recurrent",
   },
   api: {
     creations: "/api/creations",

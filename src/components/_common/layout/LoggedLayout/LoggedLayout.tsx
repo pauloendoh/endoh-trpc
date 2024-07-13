@@ -26,6 +26,10 @@ const links = [
     href: urls.pages.diary,
     label: "Diary",
   },
+  {
+    href: urls.pages.recurrent,
+    label: "Recurrent",
+  },
 ]
 
 const LoggedLayout = ({ ...props }: Props) => {

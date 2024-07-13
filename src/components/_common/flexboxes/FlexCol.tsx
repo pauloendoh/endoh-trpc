@@ -8,10 +8,11 @@ type Props = React.ComponentProps<typeof Flex> & {
 const FlexCol = (props: Props) => {
   return (
     <Flex
+      {...props}
       sx={{
         flexDirection: "column",
+        ...props.sx,
       }}
-      {...props}
     >
       {props.children}
     </Flex>
