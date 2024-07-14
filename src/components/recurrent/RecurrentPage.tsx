@@ -1,5 +1,6 @@
 import { Button, Container } from "@mantine/core"
 import { DateTime } from "luxon"
+import Head from "next/head"
 import { useMemo } from "react"
 import { useRecurrentItemsQuery } from "../../hooks/trpc/recurrent/useRecurrentItemsQuery"
 import useRecurrentModalStore from "../../hooks/zustand/modals/useRecurrentModalStore"
@@ -53,6 +54,9 @@ const RecurrentPage = ({ ...props }: Props) => {
 
   return (
     <LoggedLayout>
+      <Head>
+        <title>Recurrent</title>
+      </Head>
       <Container mt={20} size="sm">
         <Button onClick={() => openModal(buildRecurrentItemInput())}>
           + Add Item
