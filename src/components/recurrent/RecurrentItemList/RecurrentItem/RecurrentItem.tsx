@@ -65,7 +65,7 @@ const RecurrentItem = ({ item, ...props }: Props) => {
         }}
         styles={{
           radio: {
-            cursor: "pointer",
+            cursor: props.type === "today" ? "pointer" : "not-allowed",
           },
         }}
         onClick={handleClickRadio}
@@ -87,8 +87,8 @@ const RecurrentItem = ({ item, ...props }: Props) => {
                 : theme.colors.gray[6],
           }}
         >
+          {props.type === "nextDays" && `${nextDayLabel}  · `}
           {everyNDaysLabel}
-          {props.type === "nextDays" && ` · ${nextDayLabel}`}
         </Span>
       </FlexCol>
     </Flex>
