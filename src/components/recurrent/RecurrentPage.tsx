@@ -7,7 +7,7 @@ import {
 import { IconMoonStars, IconSun } from "@tabler/icons-react"
 import { DateTime } from "luxon"
 import Head from "next/head"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useRecurrentItemsQuery } from "../../hooks/trpc/recurrent/useRecurrentItemsQuery"
 import useRecurrentModalStore from "../../hooks/zustand/modals/useRecurrentModalStore"
 import { buildRecurrentItemInput } from "../../trpcServer/routers/recurrent/types/RecurrentItemInput"
@@ -60,6 +60,9 @@ const RecurrentPage = ({ ...props }: Props) => {
   }, [data])
 
   const { toggleColorScheme, colorScheme } = useMantineColorScheme()
+  useEffect(() => {
+    toggleColorScheme("light")
+  }, [])
   const dark = colorScheme === "dark"
 
   return (
