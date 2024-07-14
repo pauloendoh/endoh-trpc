@@ -1,4 +1,10 @@
-import { Button, Container } from "@mantine/core"
+import {
+  ActionIcon,
+  Button,
+  Container,
+  useMantineColorScheme,
+} from "@mantine/core"
+import { IconMoonStars, IconSun } from "@tabler/icons-react"
 import { DateTime } from "luxon"
 import Head from "next/head"
 import { useMemo } from "react"
@@ -6,6 +12,7 @@ import { useRecurrentItemsQuery } from "../../hooks/trpc/recurrent/useRecurrentI
 import useRecurrentModalStore from "../../hooks/zustand/modals/useRecurrentModalStore"
 import { buildRecurrentItemInput } from "../../trpcServer/routers/recurrent/types/RecurrentItemInput"
 import FlexCol from "../_common/flexboxes/FlexCol"
+import FlexVCenter from "../_common/flexboxes/FlexVCenter"
 import LoggedLayout from "../_common/layout/LoggedLayout/LoggedLayout"
 import RecurrentItemList from "./RecurrentItemList/RecurrentItemList"
 
@@ -52,15 +59,28 @@ const RecurrentPage = ({ ...props }: Props) => {
       )
   }, [data])
 
+  const { toggleColorScheme, colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === "dark"
+
   return (
     <LoggedLayout>
       <Head>
         <title>Recurrent</title>
       </Head>
       <Container mt={20} size="sm">
-        <Button onClick={() => openModal(buildRecurrentItemInput())}>
-          + Add Item
-        </Button>
+        <FlexVCenter justify={"space-between"}>
+          <Button onClick={() => openModal(buildRecurrentItemInput())}>
+            + Add Item
+          </Button>
+          <ActionIcon
+            variant="outline"
+            color={dark ? "yellow" : "blue"}
+            onClick={() => toggleColorScheme()}
+            title="Toggle color scheme"
+          >
+            {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
+          </ActionIcon>
+        </FlexVCenter>
 
         <FlexCol gap={40} mt={24}>
           <RecurrentItemList type={"today"} items={todayItems} />
