@@ -41,11 +41,7 @@ const RecurrentModal = (props: Props) => {
     if (isOpen) {
       form.reset(initialValue || buildRecurrentItemInput())
 
-      if (!isMobile) {
-        setTimeout(() => {
-          form.setFocus("description")
-        }, 200)
-      }
+      form.setFocus("description")
     }
   }, [isOpen, isMobile])
 
