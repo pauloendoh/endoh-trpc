@@ -23,6 +23,9 @@ const RecurrentPage = ({ ...props }: Props) => {
   const { openModal } = useRecurrentModalStore()
 
   const { data, isLoading } = useRecurrentItemsQuery()
+
+  const today = new Date().toLocaleDateString()
+
   const todayItems = useMemo(() => {
     if (!data) {
       return []
@@ -44,7 +47,7 @@ const RecurrentPage = ({ ...props }: Props) => {
         }
         return 1
       })
-  }, [data])
+  }, [data, today])
 
   const nextDayItems = useMemo(() => {
     if (!data) {
@@ -64,7 +67,7 @@ const RecurrentPage = ({ ...props }: Props) => {
         (a, b) =>
           new Date(a.nextDate).getTime() - new Date(b.nextDate).getTime()
       )
-  }, [data])
+  }, [data, today])
 
   const { toggleColorScheme, colorScheme } = useMantineColorScheme()
   useEffect(() => {
