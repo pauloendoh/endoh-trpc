@@ -11,6 +11,7 @@ import { useEffect, useMemo } from "react"
 import { useRecurrentItemsQuery } from "../../hooks/trpc/recurrent/useRecurrentItemsQuery"
 import useRecurrentModalStore from "../../hooks/zustand/modals/useRecurrentModalStore"
 import { buildRecurrentItemInput } from "../../trpcServer/routers/recurrent/types/RecurrentItemInput"
+import CenterLoader from "../_common/flexboxes/CenterLoader/CenterLoader"
 import FlexCol from "../_common/flexboxes/FlexCol"
 import FlexVCenter from "../_common/flexboxes/FlexVCenter"
 import LoggedLayout from "../_common/layout/LoggedLayout/LoggedLayout"
@@ -21,7 +22,7 @@ type Props = {}
 const RecurrentPage = ({ ...props }: Props) => {
   const { openModal } = useRecurrentModalStore()
 
-  const { data } = useRecurrentItemsQuery()
+  const { data, isLoading } = useRecurrentItemsQuery()
   const todayItems = useMemo(() => {
     if (!data) {
       return []
@@ -85,7 +86,8 @@ const RecurrentPage = ({ ...props }: Props) => {
           </ActionIcon>
         </FlexVCenter>
 
-        <FlexCol gap={40} mt={24}>
+        <FlexCol gap={40} mt={24} pb={240}>
+          {isLoading ? <CenterLoader /> : null}
           <RecurrentItemList type={"today"} items={todayItems} />
           <RecurrentItemList type={"nextDays"} items={nextDayItems} />
         </FlexCol>

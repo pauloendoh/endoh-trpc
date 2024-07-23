@@ -1,4 +1,5 @@
-import { Flex, Radio, useMantineTheme } from "@mantine/core"
+import { Flex, LoadingOverlay, Radio, useMantineTheme } from "@mantine/core"
+
 import { DateTime } from "luxon"
 import { useMemo } from "react"
 import { useSaveRecurrentItemMutation } from "../../../../hooks/trpc/recurrent/useSaveRecurrentItemMutation"
@@ -39,7 +40,7 @@ const RecurrentItem = ({ item, ...props }: Props) => {
 
   const theme = useMantineTheme()
 
-  const { mutateAsync } = useSaveRecurrentItemMutation()
+  const { mutateAsync, isLoading } = useSaveRecurrentItemMutation()
 
   const handleClickRadio = () => {
     const nextDate = DateTime.now()
@@ -54,7 +55,8 @@ const RecurrentItem = ({ item, ...props }: Props) => {
   }
 
   return (
-    <Flex mt={8} gap={8}>
+    <Flex mt={8} gap={8} pos="relative">
+      <LoadingOverlay visible={isLoading} />
       <Radio
         disabled={props.type === "nextDays"}
         checked={false}
