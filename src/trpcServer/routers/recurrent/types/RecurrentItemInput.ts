@@ -11,6 +11,8 @@ export const recurrentItemInputSchema = z.object({
   description: z.string(),
   everyNDays: z.number(),
   nextDate: z.string(),
+
+  isHighPriority: z.boolean(),
 })
 
 export type RecurrentItemInput = z.infer<typeof recurrentItemInputSchema>
@@ -22,6 +24,7 @@ export const buildRecurrentItemInput = (
   everyNDays: 1,
   nextDate: DateTime.now().startOf("day").toISO(),
 
+  isHighPriority: false,
   ...p,
 })
 
@@ -34,5 +37,7 @@ export const recurrentItemOutputToInput = (
     description: output.description,
     everyNDays: output.everyNDays,
     nextDate: output.nextDate,
+
+    isHighPriority: output.isHighPriority,
   }
 }

@@ -38,6 +38,12 @@ const RecurrentPage = ({ ...props }: Props) => {
         return daysDiff < 0
       })
       .sort((a, b) => a.everyNDays - b.everyNDays)
+      .sort((a, b) => {
+        if (a.isHighPriority && !b.isHighPriority) {
+          return -1
+        }
+        return 1
+      })
   }, [data])
 
   const nextDayItems = useMemo(() => {

@@ -1,4 +1,4 @@
-import { Modal, Textarea } from "@mantine/core"
+import { Box, Checkbox, Modal, Textarea } from "@mantine/core"
 import { DateInput } from "@mantine/dates"
 import { useEffect, useMemo } from "react"
 import { useForm } from "react-hook-form"
@@ -101,6 +101,26 @@ const RecurrentModal = (props: Props) => {
               }}
             />
           </FlexVCenter>
+
+          <Checkbox
+            checked={form.watch("isHighPriority")}
+            label="High priority"
+            styles={{
+              label: {
+                cursor: "pointer",
+              },
+              input: {
+                cursor: "pointer !important",
+              },
+            }}
+            onChange={(e) => {
+              form.setValue("isHighPriority", e.currentTarget.checked, {
+                shouldDirty: true,
+              })
+            }}
+          />
+
+          <Box />
 
           <SaveCancelButtons
             disabled={isDisabled}

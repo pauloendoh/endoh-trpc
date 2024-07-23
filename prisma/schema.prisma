@@ -328,9 +328,10 @@ model RecurrentItem {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  description String
-  everyNDays  Int
-  nextDate    DateTime
+  description    String
+  everyNDays     Int
+  nextDate       DateTime
+  isHighPriority Boolean  @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

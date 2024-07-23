@@ -91,6 +91,7 @@ const RecurrentItem = ({ item, ...props }: Props) => {
         >
           {props.type === "nextDays" && `${nextDayLabel}  · `}
           {everyNDaysLabel}
+          {item.isHighPriority && ` ·  High priority`}
         </Span>
       </FlexCol>
     </Flex>
