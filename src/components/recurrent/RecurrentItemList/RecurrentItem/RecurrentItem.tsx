@@ -6,6 +6,7 @@ import { useSaveRecurrentItemMutation } from "../../../../hooks/trpc/recurrent/u
 import useRecurrentModalStore from "../../../../hooks/zustand/modals/useRecurrentModalStore"
 import { RecurrentItemOutput } from "../../../../trpcServer/routers/recurrent/types/RecurrentItemOutput"
 import FlexCol from "../../../_common/flexboxes/FlexCol"
+import FlexVCenter from "../../../_common/flexboxes/FlexVCenter"
 import Span from "../../../_common/text/Span"
 
 type Props = {
@@ -36,6 +37,17 @@ const RecurrentItem = ({ item, ...props }: Props) => {
     }
 
     return `In ${Math.floor(daysDiff)} days`
+  }, [item])
+
+  const lateNDays = useMemo(() => {
+    if (props.type === "nextDays") {
+      return 0
+    }
+    const nextDateTime = DateTime.fromISO(item.nextDate)
+    const today = DateTime.now().startOf("day")
+    const daysDiff = nextDateTime.diff(today, "days").days
+
+    return Math.ceil(Math.abs(daysDiff))
   }, [item])
 
   const theme = useMantineTheme()
@@ -80,19 +92,31 @@ const RecurrentItem = ({ item, ...props }: Props) => {
         onClick={() => openModal(item)}
       >
         <Span>{item.description}</Span>
-        <Span
-          size="sm"
-          sx={{
-            color:
-              props.type === "today"
-                ? theme.colors.red[6]
-                : theme.colors.gray[6],
-          }}
-        >
-          {props.type === "nextDays" && `${nextDayLabel}  · `}
-          {everyNDaysLabel}
-          {item.isHighPriority && ` ·  High priority`}
-        </Span>
+        <FlexVCenter justify={"space-between"}>
+          <Span
+            size="sm"
+            sx={{
+              color:
+                props.type === "today"
+                  ? theme.colors.red[6]
+                  : theme.colors.gray[6],
+            }}
+          >
+            {props.type === "nextDays" && `${nextDayLabel}  · `}
+            {everyNDaysLabel}
+            {item.isHighPriority && ` ·  High priority`}
+          </Span>
+          {lateNDays > 0 && (
+            <Span
+              size="sm"
+              sx={{
+                color: theme.colors.red[6],
+              }}
+            >
+              {lateNDays} days late
+            </Span>
+          )}
+        </FlexVCenter>
       </FlexCol>
     </Flex>
   )

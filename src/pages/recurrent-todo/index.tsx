@@ -14,6 +14,8 @@ const TestPage = ({ ...props }: Props) => {
       className="TestPage"
       style={{
         height: "100vh",
+        maxWidth: 960,
+        overflow: "hidden",
       }}
     >
       <iframe
