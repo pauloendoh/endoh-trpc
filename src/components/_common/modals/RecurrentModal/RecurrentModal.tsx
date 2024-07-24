@@ -1,7 +1,8 @@
-import { Box, Checkbox, Modal, Textarea } from "@mantine/core"
+import { Box, Button, Checkbox, Modal, Textarea } from "@mantine/core"
 import { DateInput } from "@mantine/dates"
 import { useEffect, useMemo } from "react"
 import { useForm } from "react-hook-form"
+import { useDeleteRecurrentItemMutation } from "../../../../hooks/trpc/recurrent/useDeleteRecurrentItemMutation"
 import { useSaveRecurrentItemMutation } from "../../../../hooks/trpc/recurrent/useSaveRecurrentItemMutation"
 import { useMyMediaQuery } from "../../../../hooks/useMyMediaQuery"
 import useRecurrentModalStore from "../../../../hooks/zustand/modals/useRecurrentModalStore"
@@ -48,6 +49,8 @@ const RecurrentModal = (props: Props) => {
   const isDisabled = useMemo(() => {
     return JSON.stringify(form.watch()) === JSON.stringify(initialValue)
   }, [form.watch(), initialValue])
+
+  const { mutateAsync: submitDelete } = useDeleteRecurrentItemMutation()
 
   return (
     <Modal
@@ -118,12 +121,37 @@ const RecurrentModal = (props: Props) => {
 
           <Box />
 
-          <SaveCancelButtons
-            disabled={isDisabled}
-            isLoading={isLoading}
-            onCancel={closeModal}
-            onEnabledAndCtrlEnter={() => onSubmit(form.watch())}
-          />
+          <FlexVCenter justify={"space-between"}>
+            <SaveCancelButtons
+              disabled={isDisabled}
+              isLoading={isLoading}
+              onCancel={closeModal}
+              onEnabledAndCtrlEnter={() => onSubmit(form.watch())}
+            />
+
+            {form.watch("id") && (
+              <Button
+                variant="subtle"
+                color="red"
+                onClick={() => {
+                  if (confirm("Are you sure?")) {
+                    submitDelete(
+                      {
+                        id: form.watch("id")!,
+                      },
+                      {
+                        onSuccess: () => {
+                          closeModal()
+                        },
+                      }
+                    )
+                  }
+                }}
+              >
+                Delete
+              </Button>
+            )}
+          </FlexVCenter>
         </FlexCol>
       </form>
     </Modal>
