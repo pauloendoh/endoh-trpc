@@ -4,6 +4,7 @@ import axios from "axios"
 import { useState } from "react"
 import { MdClose, MdPhoto, MdUpload } from "react-icons/md"
 import { useCreatePresignedUrlMutation } from "../../../../../hooks/trpc/clothing/useCreatePresignedUrlMutation"
+import { CLOTHING_IMAGE_MAX_SIZE } from "../../../../../trpcServer/routers/clothing/ClothingService"
 
 type Props = {
   onSetImageUrl: (url: string) => void
@@ -48,7 +49,7 @@ const ClothingImageSubmission = ({ ...props }: Props) => {
         onReject={(rejections) => {
           alert(rejections[0].errors[0].message)
         }}
-        maxSize={15 * 1024 ** 2}
+        maxSize={CLOTHING_IMAGE_MAX_SIZE}
         accept={IMAGE_MIME_TYPE}
         multiple={false}
         {...props}

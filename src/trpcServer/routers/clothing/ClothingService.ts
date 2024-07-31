@@ -3,6 +3,8 @@ import { S3Client } from "@aws-sdk/client-s3"
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post"
 import { ClothingRepository } from "./ClothingRepository"
 
+export const CLOTHING_IMAGE_MAX_SIZE = 15 * 1024 ** 2
+
 export class ClothingService {
   constructor(private readonly clothingRepo = new ClothingRepository()) {}
 
@@ -46,7 +48,7 @@ export class ClothingService {
           key: path,
         },
         Key: path,
-        Conditions: [["content-length-range", 0, 1000000]],
+        Conditions: [["content-length-range", 0, CLOTHING_IMAGE_MAX_SIZE]],
         Expires: 30,
         Bucket: "endoh",
       }
