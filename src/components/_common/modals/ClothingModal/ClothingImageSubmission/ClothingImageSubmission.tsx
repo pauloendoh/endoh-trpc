@@ -45,8 +45,10 @@ const ClothingImageSubmission = ({ ...props }: Props) => {
           console.log("dropped files", files)
           onFileChange(files)
         }}
-        onReject={(files) => console.log("rejected files", files)}
-        maxSize={3 * 1024 ** 2}
+        onReject={(rejections) => {
+          alert(rejections[0].errors[0].message)
+        }}
+        maxSize={15 * 1024 ** 2}
         accept={IMAGE_MIME_TYPE}
         multiple={false}
         {...props}
