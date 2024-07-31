@@ -1,9 +1,8 @@
 // s3
 import { S3Client } from "@aws-sdk/client-s3"
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post"
+import { CLOTHING_IMAGE_MAX_SIZE } from "../../../components/_common/modals/ClothingModal/ClothingImageSubmission/ClothingImageSubmission"
 import { ClothingRepository } from "./ClothingRepository"
-
-export const CLOTHING_IMAGE_MAX_SIZE = 15 * 1024 ** 2
 
 export class ClothingService {
   constructor(private readonly clothingRepo = new ClothingRepository()) {}

@@ -4,7 +4,8 @@ import axios from "axios"
 import { useState } from "react"
 import { MdClose, MdPhoto, MdUpload } from "react-icons/md"
 import { useCreatePresignedUrlMutation } from "../../../../../hooks/trpc/clothing/useCreatePresignedUrlMutation"
-import { CLOTHING_IMAGE_MAX_SIZE } from "../../../../../trpcServer/routers/clothing/ClothingService"
+
+export const CLOTHING_IMAGE_MAX_SIZE = 15 * 1024 ** 2
 
 type Props = {
   onSetImageUrl: (url: string) => void
