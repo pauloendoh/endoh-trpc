@@ -2,13 +2,14 @@ import {
   Button,
   FileButton,
   Group,
+  LoadingOverlay,
   rem,
   Text,
   useMantineTheme,
 } from "@mantine/core"
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone"
 import axios from "axios"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { MdClose, MdPhoto, MdUpload } from "react-icons/md"
 import { useCreatePresignedUrlMutation } from "../../../../../hooks/trpc/clothing/useCreatePresignedUrlMutation"
 import FlexCol from "../../../flexboxes/FlexCol"
@@ -23,9 +24,13 @@ type Props = {
 const ClothingImageSubmission = ({ ...props }: Props) => {
   const theme = useMantineTheme()
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const onFileChange = (files: File[]) => {
     const firstFile = files[0]
     if (!firstFile) return
+
+    setIsLoading(true)
 
     submitCreatePresignedUrl({
       extension: firstFile.name.split(".").pop() || "",
@@ -37,9 +42,14 @@ const ClothingImageSubmission = ({ ...props }: Props) => {
         formData.append(key, value)
       })
 
-      axios.post(url, formData).then((res) => {
-        props.onSetImageUrl(finalUrl)
-      })
+      axios
+        .post(url, formData)
+        .then((res) => {
+          props.onSetImageUrl(finalUrl)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
     })
   }
 
@@ -52,6 +62,7 @@ const ClothingImageSubmission = ({ ...props }: Props) => {
     <>
       {!props.imageUrl && (
         <Dropzone
+          loading={isLoading}
           openRef={openRef}
           onDrop={(files) => {
             onFileChange(files)
@@ -87,7 +98,8 @@ const ClothingImageSubmission = ({ ...props }: Props) => {
       )}
 
       {props.imageUrl && (
-        <FlexCol w="100%" justify={"center"}>
+        <FlexCol w="100%" justify={"center"} pos="relative">
+          <LoadingOverlay visible={isLoading} />
           <img
             src={props.imageUrl}
             alt="preview"

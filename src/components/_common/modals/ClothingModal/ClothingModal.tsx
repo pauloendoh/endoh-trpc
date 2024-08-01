@@ -1,7 +1,10 @@
-import { Modal, Rating } from "@mantine/core"
+import { Modal, Rating, SegmentedControl } from "@mantine/core"
+import { ClothingType } from "@prisma/client"
+
 import { useEffect, useMemo } from "react"
 import { Col, Row } from "react-grid-system"
 import { Controller, useForm } from "react-hook-form"
+import { MdHome } from "react-icons/md"
 import { useSaveClothingMutation } from "../../../../hooks/trpc/clothing/useSaveClothingMutation"
 import { useMyMediaQuery } from "../../../../hooks/useMyMediaQuery"
 import useClothingModalStore from "../../../../hooks/zustand/modals/useClothingModalStore"
@@ -11,6 +14,7 @@ import {
 } from "../../../../trpcServer/routers/clothing/types/ClothingInput"
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
 import FlexCol from "../../flexboxes/FlexCol"
+import FlexVCenter from "../../flexboxes/FlexVCenter"
 import MyNumberInput from "../../inputs/MyNumberInput"
 import Span from "../../text/Span"
 import ClothingImageSubmission from "./ClothingImageSubmission/ClothingImageSubmission"
@@ -110,16 +114,43 @@ const ClothingModal = (props: Props) => {
             </Col>
           </Row>
 
-          <FlexCol>
-            <Span size="sm">Rating</Span>
-            <Rating
-              id="rating-input"
-              value={watch("rating")}
-              onChange={(value) =>
-                setValue("rating", value, { shouldDirty: true })
-              }
-            />
-          </FlexCol>
+          <Row>
+            <Col xs={6}>
+              <FlexCol>
+                <Span size="sm">Rating</Span>
+                <Rating
+                  id="rating-input"
+                  value={watch("rating")}
+                  onChange={(value) =>
+                    setValue("rating", value, { shouldDirty: true })
+                  }
+                />
+              </FlexCol>
+            </Col>
+            <Col xs={6}>
+              <SegmentedControl
+                data={[
+                  {
+                    label: (
+                      <FlexVCenter gap={2}>
+                        <MdHome />
+                        <span>Home</span>
+                      </FlexVCenter>
+                    ),
+                    value: "home",
+                  },
+                  {
+                    label: "Outside",
+                    value: "outside",
+                  },
+                ]}
+                value={watch("type")}
+                onChange={(val) =>
+                  setValue("type", val as ClothingType, { shouldDirty: true })
+                }
+              />
+            </Col>
+          </Row>
 
           <SaveCancelButtons
             disabled={isDisabled}

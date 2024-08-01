@@ -164,6 +164,11 @@ model ExerciseTag {
   exercises Exercise[]
 }
 
+enum ClothingType {
+  home
+  outside
+}
+
 model Clothing {
   id String @id @default(cuid())
 
@@ -175,6 +180,7 @@ model Clothing {
   rating    Int
   minDegree Int
   maxDegree Int
+  type      ClothingType @default(home)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
