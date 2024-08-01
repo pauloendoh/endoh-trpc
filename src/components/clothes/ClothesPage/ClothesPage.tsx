@@ -23,14 +23,16 @@ const ClothesPage = ({ ...props }: Props) => {
   return (
     <LoggedLayout>
       <Container size="xs">
-        <h1>Clothes</h1>
-        <Button
-          onClick={() => {
-            openModal(buildClothingInput())
-          }}
-        >
-          Add clothing
-        </Button>
+        <FlexVCenter justify={"space-between"}>
+          <h1>Clothes</h1>
+          <Button
+            onClick={() => {
+              openModal(buildClothingInput())
+            }}
+          >
+            Add clothing
+          </Button>
+        </FlexVCenter>
 
         {/* 3 columns grid */}
         <Box
