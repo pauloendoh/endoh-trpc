@@ -1,4 +1,4 @@
-import { Modal } from "@mantine/core"
+import { Modal, Rating } from "@mantine/core"
 import { useEffect, useMemo } from "react"
 import { Col, Row } from "react-grid-system"
 import { Controller, useForm } from "react-hook-form"
@@ -12,6 +12,7 @@ import {
 import SaveCancelButtons from "../../buttons/SaveCancelButtons"
 import FlexCol from "../../flexboxes/FlexCol"
 import MyNumberInput from "../../inputs/MyNumberInput"
+import Span from "../../text/Span"
 import ClothingImageSubmission from "./ClothingImageSubmission/ClothingImageSubmission"
 
 type Props = {}
@@ -68,9 +69,10 @@ const ClothingModal = (props: Props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <ClothingImageSubmission
           onSetImageUrl={(imageUrl) => setValue("imageUrl", imageUrl)}
+          imageUrl={watch("imageUrl")}
         />
 
-        <FlexCol gap={16}>
+        <FlexCol gap={16} mt={16}>
           {/* <ClothingTagSelector
             selectedTagIds={watch("tagIds") || []}
             onChange={(selectedTagIds) => setValue("tagIds", selectedTagIds)}
@@ -107,6 +109,17 @@ const ClothingModal = (props: Props) => {
               />
             </Col>
           </Row>
+
+          <FlexCol>
+            <Span size="sm">Rating</Span>
+            <Rating
+              id="rating-input"
+              value={watch("rating")}
+              onChange={(value) =>
+                setValue("rating", value, { shouldDirty: true })
+              }
+            />
+          </FlexCol>
 
           <SaveCancelButtons
             disabled={isDisabled}
