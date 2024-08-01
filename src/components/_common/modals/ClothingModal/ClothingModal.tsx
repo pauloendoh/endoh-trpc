@@ -27,9 +27,7 @@ const ClothingModal = (props: Props) => {
     reset,
     watch,
     handleSubmit,
-    register,
     setValue,
-    setFocus,
     control,
     formState: { errors },
   } = useForm<ClothingInput>({
@@ -114,7 +112,7 @@ const ClothingModal = (props: Props) => {
             </Col>
           </Row>
 
-          <Row>
+          <Row align="center">
             <Col xs={6}>
               <FlexCol>
                 <Span size="sm">Rating</Span>
