@@ -18,12 +18,6 @@ const TestPage = ({ ...props }: Props) => {
         overflow: "hidden",
       }}
     >
-      <iframe
-        title="Todoist"
-        src="https://app.todoist.com/app/project/compensate-2320934141"
-        width="50%"
-        height="100%"
-      />
       <iframe title="Recurrent" src={recurrentUrl} width="50%" height="100%" />
     </div>
   )

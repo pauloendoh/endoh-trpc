@@ -12,9 +12,8 @@ import FlexVCenter from "../../_common/flexboxes/FlexVCenter"
 import LoggedLayout from "../../_common/layout/LoggedLayout/LoggedLayout"
 import Span from "../../_common/text/Span"
 
-type Props = {}
-
-const ClothesPage = ({ ...props }: Props) => {
+// PE 2/3
+const ClothesPage = () => {
   const { data } = useClothingsQuery()
 
   const [currentTemp, setCurrentTemp] = useLocalStorage<number>({
@@ -62,7 +61,6 @@ const ClothesPage = ({ ...props }: Props) => {
           <Button
             variant="subtle"
             onClick={() => {
-              // prompt
               const temp = prompt(
                 "Enter current temperature",
                 currentTemp?.toString()
@@ -97,6 +95,7 @@ const ClothesPage = ({ ...props }: Props) => {
             marginTop: 16,
           }}
         >
+          {/* PE 2/3 - move to different component  */}
           {sortedClothings.map((clothing, i) => {
             const isWithinTemp =
               currentTemp &&
