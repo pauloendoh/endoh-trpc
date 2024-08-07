@@ -19,6 +19,12 @@ const TestPage = ({ ...props }: Props) => {
       }}
     >
       <iframe title="Recurrent" src={recurrentUrl} width="50%" height="100%" />
+      <iframe
+        title="Todoist"
+        src="https://app.todoist.com/app/upcoming"
+        width="50%"
+        height="100%"
+      />
     </div>
   )
 }
