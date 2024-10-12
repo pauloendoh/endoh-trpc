@@ -5,8 +5,7 @@
 }
 
 .root iframe {
-  width: 25%;
-  min-width: 360px;
+  width: 360px;
   height: 100%;
   border: none;
 }

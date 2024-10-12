@@ -12,25 +12,21 @@ const TestPage = ({ ...props }: Props) => {
 
   return (
     <div className={classes.root}>
-      <iframe title="Recurrent" src={recurrentUrl} width="25%" height="100%" />
+      <iframe title="Recurrent" src={recurrentUrl} />
+      <iframe title="Todoist" src="https://app.todoist.com/app/upcoming" />
+
       <iframe
-        title="Todoist"
-        src="https://app.todoist.com/app/upcoming"
-        width="25%"
-        height="100%"
+        title="TODO"
+        src="https://app.todoist.com/app/filter/todo-general-ideas-2201003068"
       />
 
       <iframe
         title="Calendar"
         src="https://app.todoist.com/app/project/calendar-2308710667"
-        width="25%"
-        height="100%"
       />
       <iframe
         title="Calendar"
         src="https://app.todoist.com/app/project/aniversarios-2198991416"
-        width="25%"
-        height="100%"
       />
     </div>
   )
