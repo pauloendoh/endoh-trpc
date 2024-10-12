@@ -16,11 +16,6 @@ const TestPage = ({ ...props }: Props) => {
       <iframe title="Todoist" src="https://app.todoist.com/app/upcoming" />
 
       <iframe
-        title="TODO"
-        src="https://app.todoist.com/app/filter/todo-general-ideas-2201003068"
-      />
-
-      <iframe
         title="Calendar"
         src="https://app.todoist.com/app/project/calendar-2308710667"
       />
