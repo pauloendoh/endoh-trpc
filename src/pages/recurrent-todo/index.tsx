@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import classes from "./index.module.css"
 
 type Props = {}
 
@@ -10,19 +11,25 @@ const TestPage = ({ ...props }: Props) => {
   }, [])
 
   return (
-    <div
-      className="TestPage"
-      style={{
-        height: "100vh",
-        maxWidth: 960,
-        overflow: "hidden",
-      }}
-    >
-      <iframe title="Recurrent" src={recurrentUrl} width="50%" height="100%" />
+    <div className={classes.root}>
+      <iframe title="Recurrent" src={recurrentUrl} width="25%" height="100%" />
       <iframe
         title="Todoist"
         src="https://app.todoist.com/app/upcoming"
-        width="50%"
+        width="25%"
+        height="100%"
+      />
+
+      <iframe
+        title="Calendar"
+        src="https://app.todoist.com/app/project/calendar-2308710667"
+        width="25%"
+        height="100%"
+      />
+      <iframe
+        title="Calendar"
+        src="https://app.todoist.com/app/project/aniversarios-2198991416"
+        width="25%"
         height="100%"
       />
     </div>

@@ -1,0 +1,11 @@
+.root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.root iframe {
+  width: 25%;
+  min-width: 360px;
+  height: 100%;
+  border: none;
+}
